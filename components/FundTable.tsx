@@ -1,12 +1,13 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { CURRENCY_LABEL, INDEX_LABEL, formatLimit, formatScale } from '@/lib/format'
+import { CURRENCY_LABEL, INDEX_LABEL, formatFundLimit, formatScale } from '@/lib/format'
 import type { FundSnapshot, IndexKey, PurchaseState } from '@/lib/types'
 
 const STATE_STYLE: Record<PurchaseState, { label: string; cls: string }> = {
   open: { label: '开放申购', cls: 'bg-emerald-100 text-emerald-800 ring-emerald-200' },
   limited: { label: '限大额', cls: 'bg-amber-100 text-amber-800 ring-amber-200' },
+  direct_only: { label: '仅直销', cls: 'bg-sky-100 text-sky-800 ring-sky-200' },
   suspended: { label: '暂停申购', cls: 'bg-slate-100 text-slate-500 ring-slate-200' },
   unknown: { label: '额度未知', cls: 'bg-slate-100 text-slate-500 ring-slate-200' },
 }
@@ -19,13 +20,15 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
   const [buyableOnly, setBuyableOnly] = useState(false)
 
   const rows = useMemo(() => {
+    // 代销可买的排最前，其次是需要去直销买的，完全买不了的沉底
+    const rank = (f: FundSnapshot) =>
+      f.state === 'open' || f.state === 'limited' ? 0 : f.state === 'direct_only' ? 1 : 2
+
     return funds
       .filter((f) => (indexFilter === 'ALL' ? true : f.index === indexFilter))
       .filter((f) => (cnyOnly ? f.currency === 'CNY' : true))
-      .filter((f) => (buyableOnly ? f.state === 'open' || f.state === 'limited' : true))
+      .filter((f) => (buyableOnly ? rank(f) < 2 : true))
       .sort((a, b) => {
-        // 买不了的一律沉底，其余按额度从大到小
-        const rank = (f: FundSnapshot) => (f.state === 'open' || f.state === 'limited' ? 0 : 1)
         if (rank(a) !== rank(b)) return rank(a) - rank(b)
         return (b.limit ?? Infinity) - (a.limit ?? Infinity)
       })
@@ -71,8 +74,9 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
           </thead>
           <tbody>
             {rows.map((f) => {
-              const style = STATE_STYLE[f.state]
-              const dimmed = f.state === 'suspended' || f.state === 'unknown'
+                const style = STATE_STYLE[f.state]
+                const dimmed = f.state === 'suspended' || f.state === 'unknown'
+                const directOnly = f.state === 'direct_only'
               return (
                 <tr
                   key={f.code}
@@ -108,14 +112,20 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                           <span className="text-orange-500">{CURRENCY_LABEL[f.currency]}</span>
                         </>
                       )}
+                      {directOnly && (
+                        <>
+                          <span className="mx-1.5">·</span>
+                          <span className="text-sky-600">{`需在${f.company} App 申购`}</span>
+                        </>
+                      )}
                     </div>
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-3 text-right font-mono ${
-                      dimmed ? '' : 'font-semibold text-slate-900'
+                      dimmed ? '' : directOnly ? 'text-sky-700' : 'font-semibold text-slate-900'
                     }`}
                   >
-                    {formatLimit(f.limit)}
+                    {formatFundLimit(f)}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
                     {f.minPurchase === null ? '—' : `${f.minPurchase} 元`}

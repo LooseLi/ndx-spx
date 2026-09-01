@@ -8,7 +8,8 @@ export type Currency = 'CNY' | 'USD_WIRE' | 'USD_CASH'
 export type PurchaseState =
   | 'open' // 开放申购，无额度限制
   | 'limited' // 限大额，有单日累计上限
-  | 'suspended' // 暂停申购
+  | 'direct_only' // 基金本身开放，但代销渠道买不了，需去基金公司直销（F/I 类份额常见）
+  | 'suspended' // 基金公司暂停申购，任何渠道都买不了
   | 'unknown' // 接口未给出可识别状态
 
 /** 基金池条目，由 build-pool 生成，人工可校订 */
@@ -37,9 +38,11 @@ export interface FundSnapshot {
   stateNote: string | null
 
   /**
-   * 单日累计申购上限（元）。
-   * null 表示不限额；0 表示当前买不进去（暂停申购）。
-   * 注意：不能直接用接口的 MAXSG，暂停申购时该字段会残留旧额度。
+   * 单日累计申购上限（元）。仅在 state 为 open / limited 时有意义，
+   * null 表示不限额，0 表示暂停。
+   * state 为 direct_only 时代销接口拿不到直销额度，一律为 null，
+   * 此时不可解读为"不限额"——展示与比对都应走 state 分支。
+   * 注意不能直接用接口的 MAXSG，暂停申购时该字段会残留旧额度。
    */
   limit: number | null
   /** 申购起点金额 */
@@ -69,12 +72,13 @@ export interface Snapshot {
 
 /** 变更事件类型，数组顺序即推送时的优先级 */
 export const CHANGE_KINDS = [
-  'reopened', // 暂停 -> 可买，最高价值
+  'reopened', // 代销渠道恢复可买，最高价值
   'limit_up', // 额度提升
   'limit_removed', // 有限额 -> 不限额
+  'direct_only', // 全面暂停 -> 仅直销可买，提示可去基金公司 App 申购
   'new_fund', // 新入池
   'limit_down', // 额度下调
-  'suspended', // 可买 -> 暂停
+  'suspended', // 可买 -> 买不了
   'aip_reopened', // 定投重新开放
 ] as const
 

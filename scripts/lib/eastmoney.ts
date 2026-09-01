@@ -99,8 +99,10 @@ interface BasicInfoRaw {
  * 1. MAXSG 用 1e11 表示不限额，不是留空；
  * 2. 暂停申购时 MAXSG 会残留上一次的额度值，必须以状态为准覆盖成 0，
  *    否则会把买不进去的基金报成"可买 100 元"；
- * 3. 状态文案和 BUY 会打架。机构/特定渠道份额(I、F 类)常见 SGZT 写着"限大额"
- *    但 BUY=false 且 MAXSG='--'，实际根本买不了，只信文案会误判成"不限额"。
+ * 3. 状态文案和 BUY 会打架。F、I 类份额常见 SGZT 写着"限大额"但 BUY=false
+ *    且 MAXSG='--'，原因是这些份额只在基金公司自家 App 卖，代销渠道拿不到额度，
+ *    并非基金暂停申购。这类归为 direct_only 而不是 suspended——场外额度紧张时
+ *    直销往往比代销宽松，标成暂停会让人错过唯一买得进去的通道。
  */
 export async function fetchFundSnapshot(entry: PoolEntry): Promise<FundSnapshot> {
   const url =
@@ -116,15 +118,18 @@ export async function fetchFundSnapshot(entry: PoolEntry): Promise<FundSnapshot>
   let state = normalizeState(d.SGZT ?? '')
   let note = d.SGZTMARK?.trim() || null
 
-  // 渠道买不了就是买不了，状态文案说什么都不算
+  // 基金没暂停但代销渠道买不了，说明是直销专属份额
   if (!buyable && state !== 'suspended') {
-    state = 'suspended'
-    note = note ?? '该渠道不可申购，可能为机构或特定渠道专属份额'
+    state = 'direct_only'
+    note = `仅基金公司直销渠道（${d.JJGS ?? '基金公司'}自家 App）可申购，代销渠道无额度`
   }
 
   let limit: number | null
   if (state === 'suspended') {
     limit = 0
+  } else if (state === 'direct_only') {
+    // 代销接口给不出直销额度，留空并由 state 承载语义
+    limit = null
   } else if (state === 'limited' && rawMax === null) {
     // 明确限大额却拿不到额度数值，是数据不完整而非不限额。
     // 降级为 unknown，让 diff 跳过它，避免误报成利好

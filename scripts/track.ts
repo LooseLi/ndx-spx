@@ -9,7 +9,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fetchFundSnapshot, mapLimit } from './lib/eastmoney'
 import { diffSnapshots } from './lib/diff'
-import { CHANGE_META, describeChange, formatLimit, STATE_LABEL } from '@/lib/format'
+import { CHANGE_META, describeChange, formatFundLimit, STATE_LABEL } from '@/lib/format'
 import type { Change, PoolEntry, Snapshot } from '@/lib/types'
 import { dispatch, enabledNotifiers } from './notifiers'
 
@@ -96,14 +96,15 @@ function buildTitle(changes: Change[]): string {
   const top = changes[0]
   const meta = CHANGE_META[top.kind]
   if (changes.length === 1) {
-    return `${meta.label}｜${top.name} ${formatLimit(top.toLimit)}`
+    return `${meta.label}｜${top.name} ${formatFundLimit({ state: top.toState, limit: top.toLimit })}`
   }
   return `${meta.label}等 ${changes.length} 项额度变更`
 }
 
 function printSummary(snapshot: Snapshot, changes: Change[], isFirstRun: boolean) {
   const cny = snapshot.funds.filter((f) => f.currency === 'CNY')
-  const buyable = cny.filter((f) => f.state !== 'suspended' && f.state !== 'unknown')
+  // 只统计代销直接买得到的，direct_only 的额度接口给不出来
+  const buyable = cny.filter((f) => f.state === 'open' || f.state === 'limited')
   const counts = new Map<string, number>()
   for (const f of cny) counts.set(f.state, (counts.get(f.state) ?? 0) + 1)
 
@@ -113,9 +114,9 @@ function printSummary(snapshot: Snapshot, changes: Change[], isFirstRun: boolean
   }
 
   const top = [...buyable].sort((a, b) => (b.limit ?? Infinity) - (a.limit ?? Infinity)).slice(0, 5)
-  console.log('--- 额度最宽松 ---')
+  console.log('--- 额度最宽松（代销可买）---')
   for (const f of top) {
-    console.log(`  ${formatLimit(f.limit).padStart(8)}  ${f.code}  ${f.name}`)
+    console.log(`  ${formatFundLimit(f).padStart(8)}  ${f.code}  ${f.name}`)
   }
 
   if (isFirstRun) {

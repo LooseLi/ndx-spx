@@ -38,6 +38,8 @@ function kinds(before: Partial<FundSnapshot>, after: Partial<FundSnapshot>): str
 
 const suspended = { state: 'suspended' as PurchaseState, limit: 0 }
 const open = { state: 'open' as PurchaseState, limit: null }
+/** 基金开放但只有基金公司自家 App 能买，代销拿不到额度 */
+const directOnly = { state: 'direct_only' as PurchaseState, limit: null }
 
 test('首次运行只建基线，不产生任何事件', () => {
   const curr = snap([fund({ code: '000001' })])
@@ -83,6 +85,22 @@ test('定投重新开放单独报一条', () => {
 test('恢复申购时若定投同时开放，两条事件都报', () => {
   const k = kinds({ ...suspended, aipOpen: false }, { state: 'limited', limit: 50, aipOpen: true })
   assert.deepEqual(k, ['reopened', 'aip_reopened'])
+})
+
+test('全面暂停转为仅直销可买，提示去基金公司渠道', () => {
+  assert.deepEqual(kinds(suspended, directOnly), ['direct_only'])
+})
+
+test('仅直销的空额度不能被当成不限额而报成取消限额', () => {
+  assert.deepEqual(kinds({ limit: 10 }, directOnly), ['suspended'])
+})
+
+test('直销专属转为代销可买算恢复申购', () => {
+  assert.deepEqual(kinds(directOnly, { state: 'limited', limit: 100 }), ['reopened'])
+})
+
+test('仅直销状态维持不变时不产生事件', () => {
+  assert.deepEqual(kinds(directOnly, directOnly), [])
 })
 
 test('任一侧状态未知时跳过，避免接口异常引发误报', () => {

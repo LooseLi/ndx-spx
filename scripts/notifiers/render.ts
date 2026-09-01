@@ -1,4 +1,4 @@
-import { CHANGE_META, INDEX_LABEL, describeChange, formatLimit } from '@/lib/format'
+import { CHANGE_META, INDEX_LABEL, describeChange, formatFundLimit } from '@/lib/format'
 import type { Change } from '@/lib/types'
 import type { NotifyPayload } from './types'
 
@@ -27,16 +27,26 @@ export function renderMarkdown(payload: NotifyPayload): string {
     lines.push('')
   }
 
-  // 附上当前可买清单，收到提醒时不用再去翻网页
+  // 附上当前可买清单，收到提醒时不用再去翻网页。
+  // 只列代销直接买得到的，direct_only 的额度拿不到，混进来会显示成"不限额"
   const buyable = snapshot.funds
-    .filter((f) => f.currency === 'CNY' && f.state !== 'suspended' && f.state !== 'unknown')
+    .filter((f) => f.currency === 'CNY' && (f.state === 'open' || f.state === 'limited'))
     .sort((a, b) => (b.limit ?? Infinity) - (a.limit ?? Infinity))
     .slice(0, 8)
 
   if (buyable.length > 0) {
     lines.push('**当前额度最宽松（人民币份额）**')
     for (const f of buyable) {
-      lines.push(`· ${INDEX_LABEL[f.index]}｜${f.name} (${f.code})　${formatLimit(f.limit)}`)
+      lines.push(`· ${INDEX_LABEL[f.index]}｜${f.name} (${f.code})　${formatFundLimit(f)}`)
+    }
+    lines.push('')
+  }
+
+  const directOnly = snapshot.funds.filter((f) => f.currency === 'CNY' && f.state === 'direct_only')
+  if (directOnly.length > 0) {
+    lines.push(`**仅直销可买（${directOnly.length} 只，需去基金公司 App）**`)
+    for (const f of directOnly.slice(0, 5)) {
+      lines.push(`· ${f.name} (${f.code})　${f.company}`)
     }
     lines.push('')
   }

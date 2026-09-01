@@ -46,6 +46,7 @@ export default async function Page() {
 
   const cny = snapshot.funds.filter((f) => f.currency === 'CNY')
   const buyable = cny.filter((f) => f.state === 'open' || f.state === 'limited')
+  const directOnly = cny.filter((f) => f.state === 'direct_only')
   // 只要有一只不限额，"最高额度"就是不限额
   const maxLimitText =
     buyable.length === 0
@@ -71,8 +72,13 @@ export default async function Page() {
       </header>
 
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat label="可申购" value={String(buyable.length)} unit={`/ ${cny.length} 只`} accent />
-        <Stat label="暂停申购" value={String(cny.length - buyable.length)} unit="只" />
+        <Stat
+          label="代销可申购"
+          value={String(buyable.length)}
+          unit={`/ ${cny.length} 只`}
+          accent
+        />
+        <Stat label="仅直销可买" value={String(directOnly.length)} unit="只" />
         <Stat label="最高单日额度" value={maxLimitText} unit="" />
         <Stat
           label="定投可用"

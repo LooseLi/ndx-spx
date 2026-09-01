@@ -24,8 +24,27 @@ function trim(n: number): string {
 export const STATE_LABEL: Record<PurchaseState, string> = {
   open: '开放申购',
   limited: '限大额',
+  direct_only: '仅直销',
   suspended: '暂停申购',
   unknown: '状态未知',
+}
+
+/**
+ * 按状态展示额度。必须走这个函数而不是直接 formatLimit，
+ * 因为 direct_only 的 limit 是"拿不到"而非"不限额"，
+ * 直接格式化会把买不到的渠道显示成额度无限制。
+ */
+export function formatFundLimit(fund: { state: PurchaseState; limit: number | null }): string {
+  switch (fund.state) {
+    case 'suspended':
+      return '不可申购'
+    case 'direct_only':
+      return '直销可买'
+    case 'unknown':
+      return '额度未知'
+    default:
+      return formatLimit(fund.limit)
+  }
 }
 
 export const CURRENCY_LABEL: Record<Currency, string> = {
@@ -48,6 +67,7 @@ export const CHANGE_META: Record<ChangeKind, KindMeta> = {
   reopened: { emoji: '🟢', label: '恢复申购' },
   limit_up: { emoji: '📈', label: '额度提升' },
   limit_removed: { emoji: '🎉', label: '取消限额' },
+  direct_only: { emoji: '🏦', label: '直销开放' },
   new_fund: { emoji: '🆕', label: '新增基金' },
   limit_down: { emoji: '📉', label: '额度下调' },
   suspended: { emoji: '🔴', label: '暂停申购' },
@@ -60,13 +80,21 @@ export function describeChange(c: Change): string {
   const cur = c.currency === 'CNY' ? '' : `（${CURRENCY_LABEL[c.currency]}）`
   const head = `${meta.emoji} ${meta.label}｜${c.name}${cur} (${c.code})`
 
+  if (c.kind === 'direct_only') {
+    return `${head}\n    基金已开放，但代销渠道无额度，需在${c.company}自家 App 申购`
+  }
   if (c.kind === 'new_fund') {
-    return `${head}\n    当前额度 ${formatLimit(c.toLimit)}`
+    return `${head}\n    当前额度 ${describeState(c.toState, c.toLimit)}`
   }
   if (c.kind === 'aip_reopened') {
-    return `${head}\n    定投通道已开放，申购额度 ${formatLimit(c.toLimit)}`
+    return `${head}\n    定投通道已开放，申购额度 ${describeState(c.toState, c.toLimit)}`
   }
-  const from = formatLimit(c.fromLimit ?? null)
-  const to = formatLimit(c.toLimit)
-  return `${head}\n    ${from} → ${to}`
+  const from = describeState(c.fromState, c.fromLimit ?? null)
+  const to = describeState(c.toState, c.toLimit)
+  const tail = c.toState === 'direct_only' ? `（仅${c.company}直销可买）` : ''
+  return `${head}\n    ${from} → ${to}${tail}`
+}
+
+function describeState(state: PurchaseState | undefined, limit: number | null): string {
+  return state ? formatFundLimit({ state, limit }) : formatLimit(limit)
 }

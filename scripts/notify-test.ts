@@ -107,6 +107,17 @@ function buildMockChanges(snapshot: Snapshot): Change[] {
       toState: 'suspended',
     })
   }
+  const direct = cny.find((f) => f.state === 'direct_only') ?? suspended[1]
+  if (direct) {
+    changes.push({
+      kind: 'direct_only',
+      ...base(direct),
+      fromLimit: 0,
+      toLimit: null,
+      fromState: 'suspended',
+      toState: 'direct_only',
+    })
+  }
   return changes
 }
 
