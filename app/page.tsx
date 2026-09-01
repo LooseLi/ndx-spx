@@ -81,9 +81,9 @@ export default async function Page() {
         <Stat label="仅直销可买" value={String(directOnly.length)} unit="只" />
         <Stat label="最高单日额度" value={maxLimitText} unit="" />
         <Stat
-          label="定投可用"
-          value={String(cny.filter((f) => f.aipOpen).length)}
-          unit={`/ ${cny.length} 只`}
+          label="暂停申购"
+          value={String(cny.filter((f) => f.state === 'suspended').length)}
+          unit="只"
         />
       </div>
 

@@ -28,7 +28,7 @@ export const feishuNotifier: Notifier = {
     const timestamp = Math.floor(Date.now() / 1000)
     // 有"恢复申购"或"取消限额"这类好事时用绿色，只有额度下调/暂停时用红色
     const good = payload.changes.some((c) =>
-      ['reopened', 'limit_up', 'limit_removed', 'aip_reopened'].includes(c.kind),
+      ['reopened', 'limit_up', 'limit_removed', 'direct_only'].includes(c.kind),
     )
 
     const res = await postJson(webhook, {

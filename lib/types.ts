@@ -45,16 +45,24 @@ export interface FundSnapshot {
    * 注意不能直接用接口的 MAXSG，暂停申购时该字段会残留旧额度。
    */
   limit: number | null
-  /** 申购起点金额 */
-  minPurchase: number | null
-
-  /** 定投是否开放。很多基金申购限大额但定投仍是重要通道 */
-  aipOpen: boolean
-  aipMin: number | null
 
   redeemStatus: string
-  nav: number | null
-  navDate: string | null
+
+  /**
+   * 接口给出的跟踪标的代码，如 NDX100 / SPX / SP500EWTR。
+   * 比按名称猜可靠，用来区分标普500与标普500等权重这类实为不同标的的基金。
+   * FOF 类基金不直接跟踪指数，此处为 null。
+   */
+  indexCode: string | null
+  indexName: string | null
+
+  /** 近一年收益率（百分数，17.03 表示 17.03%） */
+  yield1y: number | null
+  /** 申购费率（百分数，0.12 表示 0.12%），通常是打折后的 */
+  rate: number | null
+  /** 原始申购费率，与 rate 不同说明在打折 */
+  sourceRate: number | null
+
   /** 基金规模（元） */
   scale: number | null
 }
@@ -79,7 +87,6 @@ export const CHANGE_KINDS = [
   'new_fund', // 新入池
   'limit_down', // 额度下调
   'suspended', // 可买 -> 买不了
-  'aip_reopened', // 定投重新开放
 ] as const
 
 export type ChangeKind = (typeof CHANGE_KINDS)[number]

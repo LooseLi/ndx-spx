@@ -1,7 +1,15 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { CURRENCY_LABEL, INDEX_LABEL, formatFundLimit, formatScale } from '@/lib/format'
+import {
+  CURRENCY_LABEL,
+  INDEX_LABEL,
+  formatFundLimit,
+  formatRate,
+  formatScale,
+  formatYield,
+  indexTag,
+} from '@/lib/format'
 import type { FundSnapshot, IndexKey, PurchaseState } from '@/lib/types'
 
 const STATE_STYLE: Record<PurchaseState, { label: string; cls: string }> = {
@@ -66,9 +74,8 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
               <th className="px-4 py-3 font-medium">状态</th>
               <th className="px-4 py-3 font-medium">基金</th>
               <th className="px-4 py-3 text-right font-medium">单日额度</th>
-              <th className="px-4 py-3 text-right font-medium">起购</th>
-              <th className="px-4 py-3 text-center font-medium">定投</th>
-              <th className="px-4 py-3 text-right font-medium">净值</th>
+              <th className="px-4 py-3 text-right font-medium">近一年</th>
+              <th className="px-4 py-3 text-right font-medium">申购费率</th>
               <th className="px-4 py-3 text-right font-medium">规模</th>
             </tr>
           </thead>
@@ -77,6 +84,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                 const style = STATE_STYLE[f.state]
                 const dimmed = f.state === 'suspended' || f.state === 'unknown'
                 const directOnly = f.state === 'direct_only'
+                const tag = indexTag(f.indexCode)
               return (
                 <tr
                   key={f.code}
@@ -102,6 +110,14 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                     >
                       {f.name}
                     </a>
+                    {tag && (
+                      <span
+                        className="ml-1.5 inline-flex rounded bg-violet-100 px-1.5 py-0.5 align-middle text-xs font-medium text-violet-700"
+                        title={f.indexName ?? undefined}
+                      >
+                        {tag}
+                      </span>
+                    )}
                     <div className="mt-0.5 text-xs text-slate-400">
                       <span className="font-mono">{f.code}</span>
                       <span className="mx-1.5">·</span>
@@ -127,20 +143,26 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                   >
                     {formatFundLimit(f)}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
-                    {f.minPurchase === null ? '—' : `${f.minPurchase} 元`}
+                  <td
+                    className={`whitespace-nowrap px-4 py-3 text-right font-mono ${
+                      dimmed
+                        ? ''
+                        : f.yield1y === null
+                          ? 'text-slate-400'
+                          : f.yield1y >= 0
+                            ? 'text-rose-600'
+                            : 'text-emerald-600'
+                    }`}
+                  >
+                    {formatYield(f.yield1y)}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-center">
-                    {f.aipOpen ? (
-                      <span className="text-xs text-emerald-600">
-                        开放{f.aipMin ? ` / ${f.aipMin}元起` : ''}
+                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
+                    {formatRate(f.rate)}
+                    {f.sourceRate !== null && f.rate !== null && f.sourceRate > f.rate && (
+                      <span className="ml-1 text-xs text-slate-300 line-through">
+                        {formatRate(f.sourceRate)}
                       </span>
-                    ) : (
-                      <span className="text-xs text-slate-300">关闭</span>
                     )}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
-                    {f.nav ?? '—'}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
                     {formatScale(f.scale)}

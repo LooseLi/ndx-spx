@@ -14,12 +14,12 @@ function fund(over: Partial<FundSnapshot> & { code: string }): FundSnapshot {
     stateText: '限大额',
     stateNote: null,
     limit: 10,
-    minPurchase: 10,
-    aipOpen: true,
-    aipMin: 10,
     redeemStatus: '开放赎回',
-    nav: 1,
-    navDate: '2026-09-01',
+    indexCode: 'NDX100',
+    indexName: '纳斯达克100指数',
+    yield1y: 17.03,
+    rate: 0.12,
+    sourceRate: 1.2,
     scale: 1e8,
     ...over,
   }
@@ -76,15 +76,6 @@ test('从不限额变成有上限算额度下调', () => {
 
 test('可买转为暂停报暂停申购', () => {
   assert.deepEqual(kinds({ limit: 10 }, suspended), ['suspended'])
-})
-
-test('定投重新开放单独报一条', () => {
-  assert.deepEqual(kinds({ aipOpen: false }, { aipOpen: true }), ['aip_reopened'])
-})
-
-test('恢复申购时若定投同时开放，两条事件都报', () => {
-  const k = kinds({ ...suspended, aipOpen: false }, { state: 'limited', limit: 50, aipOpen: true })
-  assert.deepEqual(k, ['reopened', 'aip_reopened'])
 })
 
 test('全面暂停转为仅直销可买，提示去基金公司渠道', () => {

@@ -83,13 +83,25 @@ interface BasicInfoRaw {
   SGZTMARK?: string | null
   SHZT?: string
   MAXSG?: string
-  MINSG?: string
-  MINDT?: string
-  DTZT?: string
   BUY?: boolean
-  DWJZ?: string
-  FSRQ?: string
+  INDEXCODE?: string
+  INDEXNAME?: string
+  SYL_1N?: string
+  RATE?: string
+  SOURCERATE?: string
   ENDNAV?: string
+}
+
+/** 费率字段形如 "0.12%"，去掉百分号取数值 */
+function percent(v: unknown): number | null {
+  if (v === null || v === undefined) return null
+  return num(String(v).replace('%', ''))
+}
+
+/** 文本字段，把 '--' 和空串统一成 null */
+function cleanText(v: unknown): string | null {
+  const s = String(v ?? '').trim()
+  return !s || s === '--' ? null : s
 }
 
 /**
@@ -152,12 +164,12 @@ export async function fetchFundSnapshot(entry: PoolEntry): Promise<FundSnapshot>
     stateText: (d.SGZT ?? '').trim() || '未知',
     stateNote: note,
     limit,
-    minPurchase: num(d.MINSG),
-    aipOpen: String(d.DTZT ?? '') === '1',
-    aipMin: num(d.MINDT),
     redeemStatus: (d.SHZT ?? '').trim(),
-    nav: num(d.DWJZ),
-    navDate: d.FSRQ?.trim() || null,
+    indexCode: cleanText(d.INDEXCODE),
+    indexName: cleanText(d.INDEXNAME),
+    yield1y: num(d.SYL_1N),
+    rate: percent(d.RATE),
+    sourceRate: percent(d.SOURCERATE),
     scale: num(d.ENDNAV),
   }
 }

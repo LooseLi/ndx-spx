@@ -50,11 +50,6 @@ export function diffSnapshots(prev: Snapshot | null, curr: Snapshot): Change[] {
       // 代销依然买不到，但基金本身已开放，值得提示去直销渠道试试
       changes.push(makeChange('direct_only', now, transition))
     }
-
-    // 定投重新开放单独报一条，它是限大额期间实际能买进去的通道
-    if (!before.aipOpen && now.aipOpen) {
-      changes.push(makeChange('aip_reopened', now, transition))
-    }
   }
 
   const priority = new Map(CHANGE_KINDS.map((k, i) => [k, i]))

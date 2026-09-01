@@ -71,7 +71,34 @@ export const CHANGE_META: Record<ChangeKind, KindMeta> = {
   new_fund: { emoji: '🆕', label: '新增基金' },
   limit_down: { emoji: '📉', label: '额度下调' },
   suspended: { emoji: '🔴', label: '暂停申购' },
-  aip_reopened: { emoji: '🔁', label: '定投恢复' },
+}
+
+/** 近一年收益率，带正负号 */
+export function formatYield(v: number | null): string {
+  if (v === null) return '—'
+  return `${v > 0 ? '+' : ''}${v.toFixed(2)}%`
+}
+
+/** 申购费率 */
+export function formatRate(v: number | null): string {
+  if (v === null) return '—'
+  return v === 0 ? '免费' : `${v}%`
+}
+
+/**
+ * 跟踪标的的简短标签。同一个 Tab 下可能混着不同标的，
+ * 比如标普500和标普500等权重走势并不相同，需要区分出来。
+ */
+export function indexTag(indexCode: string | null): string | null {
+  switch (indexCode) {
+    case 'SP500EWTR':
+      return '等权重'
+    case 'NDX100':
+    case 'SPX':
+      return null // 主流标的，不必额外标注
+    default:
+      return indexCode ? '其他标的' : null
+  }
 }
 
 /** 单条变更的一行文字描述，飞书和微信共用 */
@@ -85,9 +112,6 @@ export function describeChange(c: Change): string {
   }
   if (c.kind === 'new_fund') {
     return `${head}\n    当前额度 ${describeState(c.toState, c.toLimit)}`
-  }
-  if (c.kind === 'aip_reopened') {
-    return `${head}\n    定投通道已开放，申购额度 ${describeState(c.toState, c.toLimit)}`
   }
   const from = describeState(c.fromState, c.fromLimit ?? null)
   const to = describeState(c.toState, c.toLimit)
