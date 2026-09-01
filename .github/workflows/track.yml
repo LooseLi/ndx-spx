@@ -36,8 +36,10 @@ jobs:
 
       - run: npm ci
 
+      # 用 github.event.inputs 而不是 inputs：后者只在 workflow_dispatch 上下文存在，
+      # 而本 workflow 同时挂了 schedule，会导致整个文件校验失败、不被 Actions 注册
       - name: 重建基金池
-        if: inputs.rebuild_pool
+        if: github.event.inputs.rebuild_pool == 'true'
         run: npm run pool
 
       - name: 抓取额度并推送变更
