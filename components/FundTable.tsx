@@ -21,26 +21,62 @@ const STATE_STYLE: Record<PurchaseState, { label: string; cls: string }> = {
 }
 
 type IndexFilter = 'ALL' | IndexKey
+type SortKey = 'yield1y' | 'scale'
+type SortDir = 'asc' | 'desc'
+
+/** 缺失值始终沉底，避免 — 排在中间 */
+function cmpNullable(a: number | null, b: number | null, dir: SortDir): number {
+  if (a === null && b === null) return 0
+  if (a === null) return 1
+  if (b === null) return -1
+  return dir === 'asc' ? a - b : b - a
+}
+
+function buyRank(f: FundSnapshot): number {
+  if (f.state === 'open' || f.state === 'limited') return 0
+  if (f.state === 'direct_only') return 1
+  return 2
+}
 
 export function FundTable({ funds }: { funds: FundSnapshot[] }) {
   const [indexFilter, setIndexFilter] = useState<IndexFilter>('ALL')
   const [cnyOnly, setCnyOnly] = useState(true)
   const [buyableOnly, setBuyableOnly] = useState(false)
+  const [sortKey, setSortKey] = useState<SortKey | null>(null)
+  const [sortDir, setSortDir] = useState<SortDir>('desc')
+
+  const toggleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === 'desc' ? 'asc' : 'desc'))
+    } else {
+      setSortKey(key)
+      setSortDir('desc') // 首次点列名：收益/规模默认从高到低
+    }
+  }
 
   const rows = useMemo(() => {
-    // 代销可买的排最前，其次是需要去直销买的，完全买不了的沉底
-    const rank = (f: FundSnapshot) =>
-      f.state === 'open' || f.state === 'limited' ? 0 : f.state === 'direct_only' ? 1 : 2
-
-    return funds
+    const filtered = funds
       .filter((f) => (indexFilter === 'ALL' ? true : f.index === indexFilter))
       .filter((f) => (cnyOnly ? f.currency === 'CNY' : true))
-      .filter((f) => (buyableOnly ? rank(f) < 2 : true))
-      .sort((a, b) => {
-        if (rank(a) !== rank(b)) return rank(a) - rank(b)
-        return (b.limit ?? Infinity) - (a.limit ?? Infinity)
-      })
-  }, [funds, indexFilter, cnyOnly, buyableOnly])
+      .filter((f) => (buyableOnly ? buyRank(f) < 2 : true))
+
+    return [...filtered].sort((a, b) => {
+      if (sortKey === 'yield1y') {
+        const c = cmpNullable(a.yield1y, b.yield1y, sortDir)
+        if (c !== 0) return c
+      } else if (sortKey === 'scale') {
+        const c = cmpNullable(a.scale, b.scale, sortDir)
+        if (c !== 0) return c
+      } else {
+        const ra = buyRank(a)
+        const rb = buyRank(b)
+        if (ra !== rb) return ra - rb
+        const lc = cmpNullable(a.limit, b.limit, 'desc')
+        if (lc !== 0) return lc
+      }
+      return a.code.localeCompare(b.code)
+    })
+  }, [funds, indexFilter, cnyOnly, buyableOnly, sortKey, sortDir])
 
   return (
     <section>
@@ -78,8 +114,22 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                   代销额度
                 </span>
               </th>
-              <th className="px-4 py-3 text-right font-medium">近一年</th>
-              <th className="px-4 py-3 text-right font-medium">规模</th>
+              <th className="px-4 py-3 text-right font-medium">
+                <SortHeader
+                  label="近一年"
+                  active={sortKey === 'yield1y'}
+                  dir={sortDir}
+                  onClick={() => toggleSort('yield1y')}
+                />
+              </th>
+              <th className="px-4 py-3 text-right font-medium">
+                <SortHeader
+                  label="规模"
+                  active={sortKey === 'scale'}
+                  dir={sortDir}
+                  onClick={() => toggleSort('scale')}
+                />
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -204,6 +254,34 @@ function Toggle({
       }`}
     >
       {label}
+    </button>
+  )
+}
+
+function SortHeader({
+  label,
+  active,
+  dir,
+  onClick,
+}: {
+  label: string
+  active: boolean
+  dir: SortDir
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`inline-flex items-center gap-0.5 transition hover:text-slate-800 ${
+        active ? 'text-slate-900' : 'text-slate-500'
+      }`}
+      title={active ? (dir === 'desc' ? '点击切换为升序' : '点击切换为降序') : '点击排序'}
+    >
+      {label}
+      <span className={`font-mono text-[10px] ${active ? 'text-blue-600' : 'text-slate-300'}`}>
+        {active ? (dir === 'desc' ? '↓' : '↑') : '↕'}
+      </span>
     </button>
   )
 }
