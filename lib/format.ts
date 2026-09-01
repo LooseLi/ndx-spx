@@ -44,7 +44,7 @@ export function formatFundLimit(fund: LimitDisplayFund): string {
     case 'suspended':
       return '不可申购'
     case 'direct_only':
-      return '未披露'
+      return '—'
     case 'unknown':
       return '未知'
     default:
@@ -54,15 +54,10 @@ export function formatFundLimit(fund: LimitDisplayFund): string {
 
 /** 额度列副文案，解释渠道差异或指引去 App 查看 */
 export function formatFundLimitHint(fund: LimitDisplayFund): string | null {
-  switch (fund.state) {
-    case 'open':
-    case 'limited':
-      return '天天基金代销'
-    case 'direct_only':
-      return fund.company ? `查${fund.company} App` : '查基金公司 App'
-    default:
-      return null
+  if (fund.state === 'direct_only') {
+    return fund.company ? `具体额度请在${fund.company} App 上查看` : '具体额度请在基金公司 App 上查看'
   }
+  return null
 }
 
 export const CURRENCY_LABEL: Record<Currency, string> = {
@@ -120,7 +115,7 @@ export function describeChange(c: Change): string {
   const head = `${meta.emoji} ${meta.label}｜${c.name}${cur} (${c.code})`
 
   if (c.kind === 'direct_only') {
-    return `${head}\n    代销渠道仍不可买，基金已在${c.company} App 开放（额度未披露，需 App 查看）`
+    return `${head}\n    代销渠道仍不可买，具体额度请在${c.company} App 上查看`
   }
   if (c.kind === 'new_fund') {
     return `${head}\n    当前代销额度 ${describeState(c.toState, c.toLimit, c.company)}`
@@ -129,9 +124,9 @@ export function describeChange(c: Change): string {
   const to = describeState(c.toState, c.toLimit, c.company)
   const tail =
     c.toState === 'direct_only'
-      ? `（代销无数据，需查${c.company} App）`
+      ? `（具体额度请在${c.company} App 上查看）`
       : c.toState === 'open' || c.toState === 'limited'
-        ? '（天天基金代销额度，直销可能不同）'
+        ? '（代销额度，直销 App 可能不同）'
         : ''
   return `${head}\n    代销 ${from} → ${to}${tail}`
 }

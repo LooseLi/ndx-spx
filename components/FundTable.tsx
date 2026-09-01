@@ -74,7 +74,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
               <th className="px-4 py-3 font-medium">状态</th>
               <th className="px-4 py-3 font-medium">基金</th>
               <th className="px-4 py-3 text-right font-medium">
-                <span title="来自天天基金代销渠道；基金公司 App 直销额度可能不同，且部分份额仅直销可买">
+                <span title="来自第三方代销渠道；基金公司 App 直销额度可能不同，且部分份额仅直销可买">
                   代销额度
                 </span>
               </th>
@@ -123,8 +123,6 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                     )}
                     <div className="mt-0.5 text-xs text-slate-400">
                       <span className="font-mono">{f.code}</span>
-                      <span className="mx-1.5">·</span>
-                      {f.company}
                       {f.currency !== 'CNY' && (
                         <>
                           <span className="mx-1.5">·</span>
@@ -179,7 +177,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
         )}
       </div>
       <p className="mt-3 text-xs leading-relaxed text-slate-400">
-        额度数据来自天天基金代销接口。「代销额度」指在天天基金等第三方平台可买到的上限；同一只基金在
+        额度数据来自第三方代销接口。「代销额度」指在天天基金、银行、券商等平台可买到的上限；同一只基金在
         基金公司 App 直销时额度可能更高（如华安纳指 C 代销 10 元、直销 100 元）。标为「仅直销」的
         F/I 类份额接口不披露额度，请直接打开对应基金公司 App 查看。
       </p>

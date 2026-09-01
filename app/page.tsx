@@ -135,7 +135,7 @@ export default async function Page() {
 
       <footer className="mt-10 space-y-1 border-t border-slate-200 pt-6 text-xs text-slate-400">
         <p>
-          额度数据来自天天基金代销接口，仅反映第三方平台可买到的额度，可能存在延迟。
+          额度数据来自第三方代销接口，仅反映各销售平台可买到的额度，可能存在延迟。
           同一只基金在基金公司 App 直销时额度可能更高；F/I 等仅直销份额不在接口披露范围内。
           <strong className="font-medium text-slate-500">
             实际能否申购及具体额度请以基金公司公告和各销售平台为准。
