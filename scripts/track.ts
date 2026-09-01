@@ -114,9 +114,9 @@ function printSummary(snapshot: Snapshot, changes: Change[], isFirstRun: boolean
   }
 
   const top = [...buyable].sort((a, b) => (b.limit ?? Infinity) - (a.limit ?? Infinity)).slice(0, 5)
-  console.log('--- 额度最宽松（代销可买）---')
+  console.log('--- 代销额度最宽松 ---')
   for (const f of top) {
-    console.log(`  ${formatFundLimit(f).padStart(8)}  ${f.code}  ${f.name}`)
+    console.log(`  ${formatFundLimit(f).padStart(6)}  ${f.code}  ${f.name}`)
   }
 
   if (isFirstRun) {

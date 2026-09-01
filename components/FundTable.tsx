@@ -5,6 +5,7 @@ import {
   CURRENCY_LABEL,
   INDEX_LABEL,
   formatFundLimit,
+  formatFundLimitHint,
   formatScale,
   formatYield,
   indexTag,
@@ -61,7 +62,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
         </div>
 
         <Toggle checked={cnyOnly} onChange={setCnyOnly} label="仅人民币份额" />
-        <Toggle checked={buyableOnly} onChange={setBuyableOnly} label="仅可申购" />
+        <Toggle checked={buyableOnly} onChange={setBuyableOnly} label="仅可买" />
 
         <span className="ml-auto text-sm text-slate-500">共 {rows.length} 只</span>
       </div>
@@ -72,7 +73,11 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
             <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
               <th className="px-4 py-3 font-medium">状态</th>
               <th className="px-4 py-3 font-medium">基金</th>
-              <th className="px-4 py-3 text-right font-medium">单日额度</th>
+              <th className="px-4 py-3 text-right font-medium">
+                <span title="来自天天基金代销渠道；基金公司 App 直销额度可能不同，且部分份额仅直销可买">
+                  代销额度
+                </span>
+              </th>
               <th className="px-4 py-3 text-right font-medium">近一年</th>
               <th className="px-4 py-3 text-right font-medium">规模</th>
             </tr>
@@ -126,20 +131,27 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                           <span className="text-orange-500">{CURRENCY_LABEL[f.currency]}</span>
                         </>
                       )}
-                      {directOnly && (
-                        <>
-                          <span className="mx-1.5">·</span>
-                          <span className="text-sky-600">{`需在${f.company} App 申购`}</span>
-                        </>
-                      )}
                     </div>
                   </td>
                   <td
-                    className={`whitespace-nowrap px-4 py-3 text-right font-mono ${
-                      dimmed ? '' : directOnly ? 'text-sky-700' : 'font-semibold text-slate-900'
+                    className={`whitespace-nowrap px-4 py-3 text-right ${
+                      dimmed ? '' : directOnly ? 'text-sky-700' : 'text-slate-900'
                     }`}
                   >
-                    {formatFundLimit(f)}
+                    <div
+                      className={`font-mono ${!dimmed && !directOnly ? 'font-semibold' : ''}`}
+                    >
+                      {formatFundLimit(f)}
+                    </div>
+                    {formatFundLimitHint(f) && (
+                      <div
+                        className={`mt-0.5 text-xs ${
+                          directOnly ? 'text-sky-600' : 'text-slate-400'
+                        }`}
+                      >
+                        {formatFundLimitHint(f)}
+                      </div>
+                    )}
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-3 text-right font-mono ${
@@ -166,6 +178,11 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
           <p className="px-4 py-10 text-center text-sm text-slate-400">没有符合条件的基金</p>
         )}
       </div>
+      <p className="mt-3 text-xs leading-relaxed text-slate-400">
+        额度数据来自天天基金代销接口。「代销额度」指在天天基金等第三方平台可买到的上限；同一只基金在
+        基金公司 App 直销时额度可能更高（如华安纳指 C 代销 10 元、直销 100 元）。标为「仅直销」的
+        F/I 类份额接口不披露额度，请直接打开对应基金公司 App 查看。
+      </p>
     </section>
   )
 }

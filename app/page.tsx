@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { FundTable } from '@/components/FundTable'
-import { CHANGE_META, INDEX_LABEL, formatLimit } from '@/lib/format'
+import { CHANGE_META, INDEX_LABEL, formatFundLimit, formatLimit } from '@/lib/format'
 import type { Change, Snapshot } from '@/lib/types'
 
 interface ChangeLogEntry {
@@ -79,7 +79,7 @@ export default async function Page() {
           accent
         />
         <Stat label="仅直销可买" value={String(directOnly.length)} unit="只" />
-        <Stat label="最高单日额度" value={maxLimitText} unit="" />
+        <Stat label="最高代销额度" value={maxLimitText} unit="" />
         <Stat
           label="暂停申购"
           value={String(cny.filter((f) => f.state === 'suspended').length)}
@@ -89,7 +89,7 @@ export default async function Page() {
 
       {changeLog.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-3 text-sm font-semibold text-slate-700">最近额度变动</h2>
+          <h2 className="mb-3 text-sm font-semibold text-slate-700">最近代销额度变动</h2>
           <div className="space-y-3">
             {changeLog.slice(0, 5).map((entry) => (
               <div
@@ -107,9 +107,14 @@ export default async function Page() {
                       <span className="text-slate-600">{c.name}</span>
                       <span className="font-mono text-xs text-slate-400">{c.code}</span>
                       <span className="ml-auto font-mono text-xs text-slate-500">
-                        {c.fromLimit !== undefined && `${formatLimit(c.fromLimit)} → `}
+                        {c.fromState !== undefined &&
+                          `${formatFundLimit({ state: c.fromState, limit: c.fromLimit ?? null, company: c.company })} → `}
                         <span className="font-semibold text-slate-800">
-                          {formatLimit(c.toLimit)}
+                          {formatFundLimit({
+                            state: c.toState,
+                            limit: c.toLimit,
+                            company: c.company,
+                          })}
                         </span>
                       </span>
                     </li>
@@ -130,9 +135,10 @@ export default async function Page() {
 
       <footer className="mt-10 space-y-1 border-t border-slate-200 pt-6 text-xs text-slate-400">
         <p>
-          额度数据来自天天基金公开接口，可能存在延迟。
+          额度数据来自天天基金代销接口，仅反映第三方平台可买到的额度，可能存在延迟。
+          同一只基金在基金公司 App 直销时额度可能更高；F/I 等仅直销份额不在接口披露范围内。
           <strong className="font-medium text-slate-500">
-            实际能否申购及具体额度请以基金公司公告和销售平台为准。
+            实际能否申购及具体额度请以基金公司公告和各销售平台为准。
           </strong>
         </p>
         <p>

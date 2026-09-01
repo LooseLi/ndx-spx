@@ -29,21 +29,39 @@ export const STATE_LABEL: Record<PurchaseState, string> = {
   unknown: '状态未知',
 }
 
+export interface LimitDisplayFund {
+  state: PurchaseState
+  limit: number | null
+  company?: string
+}
+
 /**
- * 按状态展示额度。必须走这个函数而不是直接 formatLimit，
- * 因为 direct_only 的 limit 是"拿不到"而非"不限额"，
- * 直接格式化会把买不到的渠道显示成额度无限制。
+ * 额度列主文案。天天基金接口只给代销渠道额度；
+ * direct_only 在接口里 MAXSG 常为空，不能填数字也不能写成「不限额」。
  */
-export function formatFundLimit(fund: { state: PurchaseState; limit: number | null }): string {
+export function formatFundLimit(fund: LimitDisplayFund): string {
   switch (fund.state) {
     case 'suspended':
       return '不可申购'
     case 'direct_only':
-      return '直销可买'
+      return '未披露'
     case 'unknown':
-      return '额度未知'
+      return '未知'
     default:
       return formatLimit(fund.limit)
+  }
+}
+
+/** 额度列副文案，解释渠道差异或指引去 App 查看 */
+export function formatFundLimitHint(fund: LimitDisplayFund): string | null {
+  switch (fund.state) {
+    case 'open':
+    case 'limited':
+      return '天天基金代销'
+    case 'direct_only':
+      return fund.company ? `查${fund.company} App` : '查基金公司 App'
+    default:
+      return null
   }
 }
 
@@ -64,12 +82,12 @@ interface KindMeta {
 }
 
 export const CHANGE_META: Record<ChangeKind, KindMeta> = {
-  reopened: { emoji: '🟢', label: '恢复申购' },
-  limit_up: { emoji: '📈', label: '额度提升' },
-  limit_removed: { emoji: '🎉', label: '取消限额' },
+  reopened: { emoji: '🟢', label: '代销恢复申购' },
+  limit_up: { emoji: '📈', label: '代销额度提升' },
+  limit_removed: { emoji: '🎉', label: '代销取消限额' },
   direct_only: { emoji: '🏦', label: '直销开放' },
   new_fund: { emoji: '🆕', label: '新增基金' },
-  limit_down: { emoji: '📉', label: '额度下调' },
+  limit_down: { emoji: '📉', label: '代销额度下调' },
   suspended: { emoji: '🔴', label: '暂停申购' },
 }
 
@@ -102,17 +120,26 @@ export function describeChange(c: Change): string {
   const head = `${meta.emoji} ${meta.label}｜${c.name}${cur} (${c.code})`
 
   if (c.kind === 'direct_only') {
-    return `${head}\n    基金已开放，但代销渠道无额度，需在${c.company}自家 App 申购`
+    return `${head}\n    代销渠道仍不可买，基金已在${c.company} App 开放（额度未披露，需 App 查看）`
   }
   if (c.kind === 'new_fund') {
-    return `${head}\n    当前额度 ${describeState(c.toState, c.toLimit)}`
+    return `${head}\n    当前代销额度 ${describeState(c.toState, c.toLimit, c.company)}`
   }
-  const from = describeState(c.fromState, c.fromLimit ?? null)
-  const to = describeState(c.toState, c.toLimit)
-  const tail = c.toState === 'direct_only' ? `（仅${c.company}直销可买）` : ''
-  return `${head}\n    ${from} → ${to}${tail}`
+  const from = describeState(c.fromState, c.fromLimit ?? null, c.company)
+  const to = describeState(c.toState, c.toLimit, c.company)
+  const tail =
+    c.toState === 'direct_only'
+      ? `（代销无数据，需查${c.company} App）`
+      : c.toState === 'open' || c.toState === 'limited'
+        ? '（天天基金代销额度，直销可能不同）'
+        : ''
+  return `${head}\n    代销 ${from} → ${to}${tail}`
 }
 
-function describeState(state: PurchaseState | undefined, limit: number | null): string {
-  return state ? formatFundLimit({ state, limit }) : formatLimit(limit)
+function describeState(
+  state: PurchaseState | undefined,
+  limit: number | null,
+  company?: string,
+): string {
+  return state ? formatFundLimit({ state, limit, company }) : formatLimit(limit)
 }

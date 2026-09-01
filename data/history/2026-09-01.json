@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-01T09:29:12.136Z",
+  "fetchedAt": "2026-09-01T09:47:12.850Z",
   "okCount": 82,
   "failed": [],
   "funds": [
@@ -12,7 +12,7 @@
       "shareClass": "A",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（广发基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅广发基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -51,7 +51,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 22.57,
+      "yield1y": 24.04,
       "scale": 1782646168.38
     },
     {
@@ -80,7 +80,7 @@
       "shareClass": "C",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（广发基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅广发基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -114,7 +114,7 @@
       "shareClass": "A",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（建信基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅建信基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -148,7 +148,7 @@
       "shareClass": "C",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（建信基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅建信基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -170,7 +170,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.58,
+      "yield1y": 18.09,
       "scale": 180352559.5
     },
     {
@@ -187,7 +187,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 22.18,
+      "yield1y": 23.66,
       "scale": 180352559.5
     },
     {
@@ -573,7 +573,7 @@
       "shareClass": "A",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（摩根基金(中国)自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅摩根基金(中国) App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -590,7 +590,7 @@
       "shareClass": "C",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（摩根基金(中国)自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅摩根基金(中国) App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -743,7 +743,7 @@
       "shareClass": "I",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（南方基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅南方基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -777,7 +777,7 @@
       "shareClass": "",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（广发基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅广发基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
@@ -952,7 +952,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.95,
+      "yield1y": 18.46,
       "scale": 1782646168.38
     },
     {
@@ -1100,7 +1100,7 @@
       "shareClass": "A",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（大成基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅大成基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
@@ -1151,7 +1151,7 @@
       "shareClass": "C",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（大成基金自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅大成基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
@@ -1219,7 +1219,7 @@
       "shareClass": "",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（摩根基金(中国)自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅摩根基金(中国) App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
@@ -1236,7 +1236,7 @@
       "shareClass": "",
       "state": "direct_only",
       "stateText": "限大额",
-      "stateNote": "仅基金公司直销渠道（摩根基金(中国)自家 App）可申购，代销渠道无额度",
+      "stateNote": "仅摩根基金(中国) App 直销可买，代销接口不披露额度，需打开 App 查看",
       "limit": null,
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
@@ -1258,7 +1258,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 11.64,
+      "yield1y": 12.08,
       "scale": 318818920.47
     },
     {
@@ -1275,7 +1275,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 11.3,
+      "yield1y": 11.74,
       "scale": 165720882.27
     },
     {
@@ -1292,7 +1292,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.59,
+      "yield1y": 18.94,
       "scale": 318818920.47
     },
     {

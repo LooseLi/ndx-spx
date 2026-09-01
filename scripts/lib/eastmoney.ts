@@ -125,7 +125,7 @@ export async function fetchFundSnapshot(entry: PoolEntry): Promise<FundSnapshot>
   // 基金没暂停但代销渠道买不了，说明是直销专属份额
   if (!buyable && state !== 'suspended') {
     state = 'direct_only'
-    note = `仅基金公司直销渠道（${d.JJGS ?? '基金公司'}自家 App）可申购，代销渠道无额度`
+    note = `仅${d.JJGS ?? '基金公司'} App 直销可买，代销接口不披露额度，需打开 App 查看`
   }
 
   let limit: number | null

@@ -35,18 +35,19 @@ export function renderMarkdown(payload: NotifyPayload): string {
     .slice(0, 8)
 
   if (buyable.length > 0) {
-    lines.push('**当前额度最宽松（人民币份额）**')
+    lines.push('**当前代销额度最宽松（人民币份额）**')
     for (const f of buyable) {
       lines.push(`· ${INDEX_LABEL[f.index]}｜${f.name} (${f.code})　${formatFundLimit(f)}`)
     }
+    lines.push('（天天基金代销额度，直销 App 可能不同）')
     lines.push('')
   }
 
   const directOnly = snapshot.funds.filter((f) => f.currency === 'CNY' && f.state === 'direct_only')
   if (directOnly.length > 0) {
-    lines.push(`**仅直销可买（${directOnly.length} 只，需去基金公司 App）**`)
+    lines.push(`**仅直销可买（${directOnly.length} 只，额度未披露）**`)
     for (const f of directOnly.slice(0, 5)) {
-      lines.push(`· ${f.name} (${f.code})　${f.company}`)
+      lines.push(`· ${f.name} (${f.code})　查${f.company} App`)
     }
     lines.push('')
   }
