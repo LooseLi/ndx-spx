@@ -53,7 +53,11 @@ npm test                 # 跑 diff 逻辑测试
 
 **抓取**走 GitHub Actions，`.github/workflows/track.yml` 已配好，交易日北京时间 08:30 / 11:40 / 14:10 / 20:10 各跑一次，抓完把 `data/` 提交回仓库。手动触发时可勾选同时重建基金池。
 
-**网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages，地址 `https://<用户名>.github.io/ndx-spx/`。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」，之后每次 push（包括机器人回写数据）都会自动重新部署。
+**网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」，之后每次 push（包括机器人回写数据）都会自动重新部署。
+
+默认地址是 `https://<用户名>.github.io/ndx-spx/`。但如果账号下的 `<用户名>.github.io` 仓库绑定了自定义域名，GitHub 会让所有 project site 都走那个域名，地址变成 `https://<自定义域名>/ndx-spx/`——路径部分不变，所以 `BASE_PATH` 无需调整。本项目当前部署在 https://resume.looseli.top/ndx-spx/ 。
+
+页面地址确定后，建议到 Settings → Secrets and variables → Actions → **Variables** 添加 `SITE_URL`（注意是 Variables 不是 Secrets，它不敏感），值为页面地址，这样推送消息末尾会带上可点击的链接。
 
 Pages 的 project site 在子路径下，所以构建时通过 `BASE_PATH=/ndx-spx` 给资源加前缀，漏掉会导致 JS/CSS 全部 404；产物里还要有 `.nojekyll`，否则 Jekyll 会忽略 `_next` 目录。这两点 workflow 里都处理了。
 
