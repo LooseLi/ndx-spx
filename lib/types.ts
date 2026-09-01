@@ -1,0 +1,95 @@
+/** 跟踪的指数 */
+export type IndexKey = 'NDX' | 'SPX'
+
+/** 份额计价币种。美元份额需要外币账户，普通用户通常只关心 CNY */
+export type Currency = 'CNY' | 'USD_WIRE' | 'USD_CASH'
+
+/** 申购状态，归一化后的枚举 */
+export type PurchaseState =
+  | 'open' // 开放申购，无额度限制
+  | 'limited' // 限大额，有单日累计上限
+  | 'suspended' // 暂停申购
+  | 'unknown' // 接口未给出可识别状态
+
+/** 基金池条目，由 build-pool 生成，人工可校订 */
+export interface PoolEntry {
+  code: string
+  name: string
+  index: IndexKey
+  currency: Currency
+  /** A/C/D/E/I 等份额类别，取不到时为空串 */
+  shareClass: string
+}
+
+/** 单只基金的一次抓取结果 */
+export interface FundSnapshot {
+  code: string
+  name: string
+  company: string
+  index: IndexKey
+  currency: Currency
+  shareClass: string
+
+  state: PurchaseState
+  /** 接口原文，如 "限大额" */
+  stateText: string
+  /** 接口的限额说明文案，如 "限大额(单日累计购买上限10元。)" */
+  stateNote: string | null
+
+  /**
+   * 单日累计申购上限（元）。
+   * null 表示不限额；0 表示当前买不进去（暂停申购）。
+   * 注意：不能直接用接口的 MAXSG，暂停申购时该字段会残留旧额度。
+   */
+  limit: number | null
+  /** 申购起点金额 */
+  minPurchase: number | null
+
+  /** 定投是否开放。很多基金申购限大额但定投仍是重要通道 */
+  aipOpen: boolean
+  aipMin: number | null
+
+  redeemStatus: string
+  nav: number | null
+  navDate: string | null
+  /** 基金规模（元） */
+  scale: number | null
+}
+
+/** 一次完整抓取的快照文件 */
+export interface Snapshot {
+  /** ISO 时间戳 */
+  fetchedAt: string
+  /** 成功抓取的基金数 */
+  okCount: number
+  /** 抓取失败的基金代码 */
+  failed: string[]
+  funds: FundSnapshot[]
+}
+
+/** 变更事件类型，数组顺序即推送时的优先级 */
+export const CHANGE_KINDS = [
+  'reopened', // 暂停 -> 可买，最高价值
+  'limit_up', // 额度提升
+  'limit_removed', // 有限额 -> 不限额
+  'new_fund', // 新入池
+  'limit_down', // 额度下调
+  'suspended', // 可买 -> 暂停
+  'aip_reopened', // 定投重新开放
+] as const
+
+export type ChangeKind = (typeof CHANGE_KINDS)[number]
+
+export interface Change {
+  kind: ChangeKind
+  code: string
+  name: string
+  company: string
+  index: IndexKey
+  currency: Currency
+  /** 变更前的额度，新基金为 undefined */
+  fromLimit?: number | null
+  toLimit: number | null
+  fromState?: PurchaseState
+  toState: PurchaseState
+}

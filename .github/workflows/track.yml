@@ -1,0 +1,66 @@
+name: 额度监控
+
+on:
+  schedule:
+    # UTC 时间。对应北京时间 08:30 / 11:40 / 14:10 / 20:10，
+    # 覆盖盘前、上午收市、下午收市和晚间公告生效的几个时点。
+    - cron: '30 0 * * 1-5'
+    - cron: '40 3 * * 1-5'
+    - cron: '10 6 * * 1-5'
+    - cron: '10 12 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      rebuild_pool:
+        description: '同时重建基金池'
+        type: boolean
+        default: false
+
+# 同一时间只跑一个，避免并发 commit 冲突
+concurrency:
+  group: track
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: 重建基金池
+        if: inputs.rebuild_pool
+        run: npm run pool
+
+      - name: 抓取额度并推送变更
+        env:
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+          SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+          WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
+          WXPUSHER_UIDS: ${{ secrets.WXPUSHER_UIDS }}
+          WXPUSHER_TOPIC_IDS: ${{ secrets.WXPUSHER_TOPIC_IDS }}
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: npm run track
+
+      - name: 回写数据
+        run: |
+          if [ -z "$(git status --porcelain data)" ]; then
+            echo "数据无变化，跳过提交"
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data
+          git commit -m "chore: 更新基金额度快照 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M')"
+          # 定时任务之间可能有推送竞争，rebase 后重试一次
+          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git push
