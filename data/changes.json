@@ -1,0 +1,43 @@
+[
+  {
+    "at": "2026-09-01T16:34:44.102Z",
+    "changes": [
+      {
+        "kind": "limit_up",
+        "code": "018966",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币A",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 10000,
+        "fromState": "limited",
+        "toState": "limited"
+      },
+      {
+        "kind": "limit_up",
+        "code": "018967",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币C",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 10000,
+        "fromState": "limited",
+        "toState": "limited"
+      },
+      {
+        "kind": "limit_up",
+        "code": "021773",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币E",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 10000,
+        "fromState": "limited",
+        "toState": "limited"
+      }
+    ]
+  }
+]
