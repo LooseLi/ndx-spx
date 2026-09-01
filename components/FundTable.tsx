@@ -106,11 +106,11 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
       <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
         <table className="w-full min-w-[720px] table-fixed text-sm">
           <colgroup>
-            <col className="w-[88px]" />
+            <col className="w-[100px]" />
             <col />
-            <col className="w-[148px]" />
-            <col className="w-[108px]" />
-            <col className="w-[96px]" />
+            <col className="w-[150px]" />
+            <col className="w-[120px]" />
+            <col className="w-[150px]" />
           </colgroup>
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
