@@ -1,0 +1,57 @@
+name: 部署网页
+
+on:
+  # 机器人每次回写数据都会 push，从而自动刷新页面
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 新的部署直接顶掉排队中的旧部署，页面只需保持最新
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: 构建静态页
+        env:
+          # Pages 的 project site 部署在 /<仓库名> 子路径下，
+          # 不设这个前缀会导致 JS/CSS 全部 404
+          BASE_PATH: /ndx-spx
+        run: npm run build
+
+      # 不加这个文件，Jekyll 会忽略 Next.js 的 _next 目录
+      - name: 跳过 Jekyll 处理
+        run: touch out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

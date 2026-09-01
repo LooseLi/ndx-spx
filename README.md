@@ -53,7 +53,11 @@ npm test                 # 跑 diff 逻辑测试
 
 **抓取**走 GitHub Actions，`.github/workflows/track.yml` 已配好，交易日北京时间 08:30 / 11:40 / 14:10 / 20:10 各跑一次，抓完把 `data/` 提交回仓库。手动触发时可勾选同时重建基金池。
 
-**网页**是纯静态导出，仓库导入 Vercel 即可，Actions 提交数据后会自动触发重新部署。部署到 GitHub Pages 需要设置 `BASE_PATH` 环境变量为仓库名。
+**网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages，地址 `https://<用户名>.github.io/ndx-spx/`。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」，之后每次 push（包括机器人回写数据）都会自动重新部署。
+
+Pages 的 project site 在子路径下，所以构建时通过 `BASE_PATH=/ndx-spx` 给资源加前缀，漏掉会导致 JS/CSS 全部 404；产物里还要有 `.nojekyll`，否则 Jekyll 会忽略 `_next` 目录。这两点 workflow 里都处理了。
+
+改用 Vercel 的话（private 仓库免费账户不能用 Pages，需要 Vercel），导入仓库即可，此时部署在根路径，要把 `BASE_PATH` 留空。
 
 ## 数据源
 
