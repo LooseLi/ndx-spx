@@ -115,20 +115,24 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                 </span>
               </th>
               <th className="px-4 py-3 text-right font-medium">
-                <SortHeader
-                  label="近一年"
-                  active={sortKey === 'yield1y'}
-                  dir={sortDir}
-                  onClick={() => toggleSort('yield1y')}
-                />
+                <div className="flex justify-end">
+                  <SortHeader
+                    label="近一年"
+                    active={sortKey === 'yield1y'}
+                    dir={sortDir}
+                    onClick={() => toggleSort('yield1y')}
+                  />
+                </div>
               </th>
               <th className="px-4 py-3 text-right font-medium">
-                <SortHeader
-                  label="规模"
-                  active={sortKey === 'scale'}
-                  dir={sortDir}
-                  onClick={() => toggleSort('scale')}
-                />
+                <div className="flex justify-end">
+                  <SortHeader
+                    label="规模"
+                    active={sortKey === 'scale'}
+                    dir={sortDir}
+                    onClick={() => toggleSort('scale')}
+                  />
+                </div>
               </th>
             </tr>
           </thead>
@@ -273,15 +277,38 @@ function SortHeader({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-0.5 transition hover:text-slate-800 ${
-        active ? 'text-slate-900' : 'text-slate-500'
+      className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 transition ${
+        active
+          ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200'
+          : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
       }`}
       title={active ? (dir === 'desc' ? '点击切换为升序' : '点击切换为降序') : '点击排序'}
     >
       {label}
-      <span className={`font-mono text-[10px] ${active ? 'text-blue-600' : 'text-slate-300'}`}>
-        {active ? (dir === 'desc' ? '↓' : '↑') : '↕'}
-      </span>
+      <SortIcon active={active} dir={dir} />
     </button>
+  )
+}
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  const activeCls = 'h-4 w-4 text-blue-600'
+  const idleCls = 'h-4 w-4 text-slate-400'
+
+  if (active) {
+    return dir === 'desc' ? (
+      <svg className={activeCls} viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+        <path d="M8 12.5 3 6.5h10L8 12.5z" />
+      </svg>
+    ) : (
+      <svg className={activeCls} viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+        <path d="M8 3.5 13 9.5H3L8 3.5z" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg className={idleCls} viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+      <path d="M8 3.5 10.5 6H5.5L8 3.5zM8 12.5 5.5 10h5L8 12.5z" />
+    </svg>
   )
 }
