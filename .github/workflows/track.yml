@@ -14,6 +14,10 @@ on:
         description: '同时重建基金池'
         type: boolean
         default: false
+      test_notify:
+        description: '发一条测试推送（用于验证 Secret 是否配对）'
+        type: boolean
+        default: false
 
 # 同一时间只跑一个，避免并发 commit 冲突
 concurrency:
@@ -26,12 +30,23 @@ jobs:
     permissions:
       contents: write
 
-    steps:
-      - uses: actions/checkout@v4
+    # 推送渠道配置对多个步骤都要用，提到 job 级别避免重复
+    env:
+      FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+      FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+      WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+      SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+      WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
+      WXPUSHER_UIDS: ${{ secrets.WXPUSHER_UIDS }}
+      WXPUSHER_TOPIC_IDS: ${{ secrets.WXPUSHER_TOPIC_IDS }}
+      SITE_URL: ${{ vars.SITE_URL }}
 
-      - uses: actions/setup-node@v4
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - run: npm ci
@@ -43,16 +58,12 @@ jobs:
         run: npm run pool
 
       - name: 抓取额度并推送变更
-        env:
-          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
-          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
-          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
-          SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
-          WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
-          WXPUSHER_UIDS: ${{ secrets.WXPUSHER_UIDS }}
-          WXPUSHER_TOPIC_IDS: ${{ secrets.WXPUSHER_TOPIC_IDS }}
-          SITE_URL: ${{ vars.SITE_URL }}
         run: npm run track
+
+      # 无变更时 track 会静默退出，无法验证 Secret，所以留一个手动自检开关
+      - name: 推送自检
+        if: github.event.inputs.test_notify == 'true'
+        run: npm run notify:test
 
       - name: 回写数据
         run: |
