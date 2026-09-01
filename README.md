@@ -35,7 +35,14 @@ npm test                 # 跑 diff 逻辑测试
 
 复制 `.env.example` 为 `.env` 填写，本地用 `npm run notify:test` 验证。部署到 GitHub Actions 时把同名变量填到仓库的 Secrets 里。
 
-推荐**飞书自定义机器人**：群设置 → 群机器人 → 添加自定义机器人，复制 webhook 填到 `FEISHU_WEBHOOK` 即可，免审核、支持卡片。
+推荐**飞书自定义机器人**，获取步骤：
+
+1. 飞书里新建一个群（可以只有自己，用来当通知收件箱）
+2. 群右上角 `···` → 设置 → 群机器人 → 添加机器人 → 选「自定义机器人」
+3. 填名称如"基金额度提醒"，下一步会给出一个 `https://open.feishu.cn/open-apis/bot/v2/hook/xxxx` 地址
+4. 复制该地址填到 `FEISHU_WEBHOOK`
+
+「安全设置」三个选项按需处理：**签名校验**需把密钥填到 `FEISHU_SECRET`；**自定义关键词**要求消息里必须含该词，建议不填或填"额度"；IP 白名单在 GitHub Actions 上不可用（出口 IP 不固定），不要勾。
 
 个人微信没有官方接口，需要经 [Server 酱](https://sct.ftqq.com) 或 [WxPusher](https://wxpusher.zjiecode.com) 中转，扫码绑定后填 key。
 
