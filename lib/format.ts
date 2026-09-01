@@ -79,12 +79,6 @@ export function formatYield(v: number | null): string {
   return `${v > 0 ? '+' : ''}${v.toFixed(2)}%`
 }
 
-/** 申购费率 */
-export function formatRate(v: number | null): string {
-  if (v === null) return '—'
-  return v === 0 ? '免费' : `${v}%`
-}
-
 /**
  * 跟踪标的的简短标签。同一个 Tab 下可能混着不同标的，
  * 比如标普500和标普500等权重走势并不相同，需要区分出来。

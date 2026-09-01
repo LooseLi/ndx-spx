@@ -87,15 +87,7 @@ interface BasicInfoRaw {
   INDEXCODE?: string
   INDEXNAME?: string
   SYL_1N?: string
-  RATE?: string
-  SOURCERATE?: string
   ENDNAV?: string
-}
-
-/** 费率字段形如 "0.12%"，去掉百分号取数值 */
-function percent(v: unknown): number | null {
-  if (v === null || v === undefined) return null
-  return num(String(v).replace('%', ''))
 }
 
 /** 文本字段，把 '--' 和空串统一成 null */
@@ -168,8 +160,6 @@ export async function fetchFundSnapshot(entry: PoolEntry): Promise<FundSnapshot>
     indexCode: cleanText(d.INDEXCODE),
     indexName: cleanText(d.INDEXNAME),
     yield1y: num(d.SYL_1N),
-    rate: percent(d.RATE),
-    sourceRate: percent(d.SOURCERATE),
     scale: num(d.ENDNAV),
   }
 }

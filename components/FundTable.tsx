@@ -5,7 +5,6 @@ import {
   CURRENCY_LABEL,
   INDEX_LABEL,
   formatFundLimit,
-  formatRate,
   formatScale,
   formatYield,
   indexTag,
@@ -75,7 +74,6 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
               <th className="px-4 py-3 font-medium">基金</th>
               <th className="px-4 py-3 text-right font-medium">单日额度</th>
               <th className="px-4 py-3 text-right font-medium">近一年</th>
-              <th className="px-4 py-3 text-right font-medium">申购费率</th>
               <th className="px-4 py-3 text-right font-medium">规模</th>
             </tr>
           </thead>
@@ -155,14 +153,6 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                     }`}
                   >
                     {formatYield(f.yield1y)}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
-                    {formatRate(f.rate)}
-                    {f.sourceRate !== null && f.rate !== null && f.sourceRate > f.rate && (
-                      <span className="ml-1 text-xs text-slate-300 line-through">
-                        {formatRate(f.sourceRate)}
-                      </span>
-                    )}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-slate-500">
                     {formatScale(f.scale)}

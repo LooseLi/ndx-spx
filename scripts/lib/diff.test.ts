@@ -18,8 +18,6 @@ function fund(over: Partial<FundSnapshot> & { code: string }): FundSnapshot {
     indexCode: 'NDX100',
     indexName: '纳斯达克100指数',
     yield1y: 17.03,
-    rate: 0.12,
-    sourceRate: 1.2,
     scale: 1e8,
     ...over,
   }

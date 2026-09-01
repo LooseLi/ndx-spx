@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-01T08:44:52.681Z",
+  "fetchedAt": "2026-09-01T09:29:12.136Z",
   "okCount": 82,
   "failed": [],
   "funds": [
@@ -18,8 +18,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.34,
-      "rate": null,
-      "sourceRate": null,
       "scale": 12223128151.65
     },
     {
@@ -37,8 +35,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.67,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 4886894194.73
     },
     {
@@ -56,8 +52,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.57,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1782646168.38
     },
     {
@@ -75,8 +69,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.51,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 6492998549.28
     },
     {
@@ -94,8 +86,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.1,
-      "rate": null,
-      "sourceRate": null,
       "scale": 6492998549.28
     },
     {
@@ -113,8 +103,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.32,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1110149170.7
     },
     {
@@ -132,8 +120,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 21.77,
-      "rate": null,
-      "sourceRate": null,
       "scale": 2176385223.52
     },
     {
@@ -151,8 +137,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 15.85,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1288271997.75
     },
     {
@@ -170,8 +154,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 21.41,
-      "rate": null,
-      "sourceRate": null,
       "scale": 1288271997.75
     },
     {
@@ -189,8 +171,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.58,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 180352559.5
     },
     {
@@ -208,8 +188,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.18,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 180352559.5
     },
     {
@@ -227,8 +205,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.79,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1347831808.72
     },
     {
@@ -246,8 +222,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.62,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 322719698.67
     },
     {
@@ -265,8 +239,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.27,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 168065142.82
     },
     {
@@ -284,8 +256,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 23.86,
-      "rate": null,
-      "sourceRate": null,
       "scale": 322719698.67
     },
     {
@@ -303,8 +273,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18.21,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 1504092578.8
     },
     {
@@ -322,8 +290,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 23.87,
-      "rate": null,
-      "sourceRate": null,
       "scale": 1504092578.8
     },
     {
@@ -341,8 +307,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.86,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 707176698.32
     },
     {
@@ -360,8 +324,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 23.51,
-      "rate": null,
-      "sourceRate": null,
       "scale": 707176698.32
     },
     {
@@ -379,8 +341,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.85,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 6210457713.69
     },
     {
@@ -398,8 +358,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.74,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 4832996804.46
     },
     {
@@ -417,8 +375,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18.68,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 2076998722.98
     },
     {
@@ -436,8 +392,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18.39,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1640123827.78
     },
     {
@@ -455,8 +409,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 24.25,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 2076998722.98
     },
     {
@@ -474,8 +426,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 23.96,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1640123827.78
     },
     {
@@ -493,8 +443,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.24,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 3075464626.64
     },
     {
@@ -512,8 +460,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.01,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 2933548906.84
     },
     {
@@ -531,8 +477,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 15.44,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1633433512.76
     },
     {
@@ -550,8 +494,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 14.98,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1108805510.1
     },
     {
@@ -569,8 +511,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 20.98,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 22721236.82
     },
     {
@@ -588,8 +528,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 21.62,
-      "rate": null,
-      "sourceRate": 1.2,
       "scale": 0
     },
     {
@@ -607,8 +545,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.54,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 2968994604.47
     },
     {
@@ -626,8 +562,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.19,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1080342036.99
     },
     {
@@ -645,8 +579,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 23.18,
-      "rate": null,
-      "sourceRate": null,
       "scale": 14619033.74
     },
     {
@@ -664,8 +596,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.8,
-      "rate": null,
-      "sourceRate": null,
       "scale": 13617346.59
     },
     {
@@ -683,8 +613,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.4,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 967918008.71
     },
     {
@@ -702,8 +630,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.17,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 428848157.56
     },
     {
@@ -721,8 +647,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.31,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 816089711.13
     },
     {
@@ -740,8 +664,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.03,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 638954440.78
     },
     {
@@ -759,8 +681,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.19,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 2178357942.75
     },
     {
@@ -778,8 +698,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.73,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1517237630.03
     },
     {
@@ -797,8 +715,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.78,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1062873419.57
     },
     {
@@ -816,8 +732,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.5,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 405558326.85
     },
     {
@@ -835,8 +749,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.8,
-      "rate": null,
-      "sourceRate": null,
       "scale": 3136027483.82
     },
     {
@@ -854,8 +766,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 15.32,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 364028399.96
     },
     {
@@ -873,8 +783,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.52,
-      "rate": null,
-      "sourceRate": null,
       "scale": 2147321530.93
     },
     {
@@ -892,8 +800,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18.37,
-      "rate": null,
-      "sourceRate": null,
       "scale": 24300350.52
     },
     {
@@ -911,8 +817,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.01,
-      "rate": null,
-      "sourceRate": null,
       "scale": 170782223.49
     },
     {
@@ -930,8 +834,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.15,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 59782000.32
     },
     {
@@ -949,8 +851,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 15.85,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 51581579.51
     },
     {
@@ -968,8 +868,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18,
-      "rate": null,
-      "sourceRate": null,
       "scale": 170421847.75
     },
     {
@@ -987,8 +885,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 17.03,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 5810040276.47
     },
     {
@@ -1006,8 +902,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.64,
-      "rate": null,
-      "sourceRate": null,
       "scale": 5810040276.47
     },
     {
@@ -1025,8 +919,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 22.64,
-      "rate": null,
-      "sourceRate": null,
       "scale": 5810040276.47
     },
     {
@@ -1044,8 +936,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 18.05,
-      "rate": 0.15,
-      "sourceRate": 1.5,
       "scale": 2177013836.58
     },
     {
@@ -1063,8 +953,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.95,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1782646168.38
     },
     {
@@ -1082,8 +970,6 @@
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
       "yield1y": 16.73,
-      "rate": 0.13,
-      "sourceRate": 1.3,
       "scale": 12223128151.65
     },
     {
@@ -1101,8 +987,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18.17,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1543416327.36
     },
     {
@@ -1120,8 +1004,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.6,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1285578443.52
     },
     {
@@ -1139,8 +1021,6 @@
       "indexCode": null,
       "indexName": null,
       "yield1y": 12.29,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 2525374707.81
     },
     {
@@ -1158,8 +1038,6 @@
       "indexCode": null,
       "indexName": null,
       "yield1y": 12,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1606787338.13
     },
     {
@@ -1177,8 +1055,6 @@
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
       "yield1y": 11.01,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 209635785.48
     },
     {
@@ -1196,8 +1072,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.33,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 123499090.32
     },
     {
@@ -1215,8 +1089,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 17.7,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 123499090.32
     },
     {
@@ -1234,8 +1106,6 @@
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
       "yield1y": 16.69,
-      "rate": null,
-      "sourceRate": null,
       "scale": 730385358.59
     },
     {
@@ -1253,8 +1123,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18.42,
-      "rate": null,
-      "sourceRate": null,
       "scale": 6466845879.52
     },
     {
@@ -1272,8 +1140,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18,
-      "rate": null,
-      "sourceRate": null,
       "scale": 1285578443.52
     },
     {
@@ -1291,8 +1157,6 @@
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
       "yield1y": 16.35,
-      "rate": null,
-      "sourceRate": null,
       "scale": 209635785.48
     },
     {
@@ -1310,8 +1174,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.63,
-      "rate": 0.1,
-      "sourceRate": 1,
       "scale": 132270847.93
     },
     {
@@ -1329,8 +1191,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.28,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 60107314.39
     },
     {
@@ -1348,8 +1208,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 13.08,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 5303168704.85
     },
     {
@@ -1367,8 +1225,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18.54,
-      "rate": null,
-      "sourceRate": null,
       "scale": 5303168704.85
     },
     {
@@ -1386,8 +1242,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18.54,
-      "rate": null,
-      "sourceRate": null,
       "scale": 5303168704.85
     },
     {
@@ -1405,8 +1259,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 11.64,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 318818920.47
     },
     {
@@ -1424,8 +1276,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 11.3,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 165720882.27
     },
     {
@@ -1443,8 +1293,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 18.59,
-      "rate": null,
-      "sourceRate": null,
       "scale": 318818920.47
     },
     {
@@ -1462,8 +1310,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.98,
-      "rate": null,
-      "sourceRate": null,
       "scale": 2304202372.31
     },
     {
@@ -1481,8 +1327,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.75,
-      "rate": 0,
-      "sourceRate": 0,
       "scale": 1851640897.65
     },
     {
@@ -1500,8 +1344,6 @@
       "indexCode": null,
       "indexName": null,
       "yield1y": 12,
-      "rate": null,
-      "sourceRate": null,
       "scale": 183728006.85
     },
     {
@@ -1519,8 +1361,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 13,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 6466845879.52
     },
     {
@@ -1538,8 +1378,6 @@
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
       "yield1y": 11.34,
-      "rate": 0.15,
-      "sourceRate": 1.5,
       "scale": 730385358.59
     },
     {
@@ -1557,8 +1395,6 @@
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
       "yield1y": 12.74,
-      "rate": 0.12,
-      "sourceRate": 1.2,
       "scale": 1543416327.36
     }
   ]

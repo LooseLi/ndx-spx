@@ -58,10 +58,6 @@ export interface FundSnapshot {
 
   /** 近一年收益率（百分数，17.03 表示 17.03%） */
   yield1y: number | null
-  /** 申购费率（百分数，0.12 表示 0.12%），通常是打折后的 */
-  rate: number | null
-  /** 原始申购费率，与 rate 不同说明在打折 */
-  sourceRate: number | null
 
   /** 基金规模（元） */
   scale: number | null
