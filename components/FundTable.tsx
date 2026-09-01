@@ -103,8 +103,15 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
         <span className="ml-auto text-sm text-slate-500">共 {rows.length} 只</span>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-        <table className="w-full min-w-[880px] text-sm">
+      <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+        <table className="w-full min-w-[720px] table-fixed text-sm">
+          <colgroup>
+            <col className="w-[88px]" />
+            <col />
+            <col className="w-[148px]" />
+            <col className="w-[108px]" />
+            <col className="w-[96px]" />
+          </colgroup>
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
               <th className="px-4 py-3 font-medium">状态</th>
@@ -142,6 +149,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                 const dimmed = f.state === 'suspended' || f.state === 'unknown'
                 const directOnly = f.state === 'direct_only'
                 const tag = indexTag(f.indexCode)
+                const limitHint = formatFundLimitHint(f)
               return (
                 <tr
                   key={f.code}
@@ -157,51 +165,57 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <a
-                      href={`https://fund.eastmoney.com/${f.code}.html`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`font-medium hover:text-blue-600 hover:underline ${
-                        dimmed ? '' : 'text-slate-900'
-                      }`}
-                    >
-                      {f.name}
-                    </a>
-                    {tag && (
-                      <span
-                        className="ml-1.5 inline-flex rounded bg-violet-100 px-1.5 py-0.5 align-middle text-xs font-medium text-violet-700"
-                        title={f.indexName ?? undefined}
-                      >
-                        {tag}
-                      </span>
-                    )}
-                    <div className="mt-0.5 text-xs text-slate-400">
-                      <span className="font-mono">{f.code}</span>
-                      {f.currency !== 'CNY' && (
-                        <>
-                          <span className="mx-1.5">·</span>
-                          <span className="text-orange-500">{CURRENCY_LABEL[f.currency]}</span>
-                        </>
-                      )}
+                    <div className="min-w-0">
+                      <div className="flex min-w-0 items-start gap-1">
+                        <a
+                          href={`https://fund.eastmoney.com/${f.code}.html`}
+                          target="_blank"
+                          rel="noreferrer"
+                          title={f.name}
+                          className={`min-w-0 truncate font-medium hover:text-blue-600 hover:underline ${
+                            dimmed ? '' : 'text-slate-900'
+                          }`}
+                        >
+                          {f.name}
+                        </a>
+                        {tag && (
+                          <span
+                            className="shrink-0 rounded bg-violet-100 px-1.5 py-0.5 text-xs font-medium text-violet-700"
+                            title={f.indexName ?? undefined}
+                          >
+                            {tag}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-0.5 truncate text-xs text-slate-400">
+                        <span className="font-mono">{f.code}</span>
+                        {f.currency !== 'CNY' && (
+                          <>
+                            <span className="mx-1.5">·</span>
+                            <span className="text-orange-500">{CURRENCY_LABEL[f.currency]}</span>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </td>
                   <td
-                    className={`whitespace-nowrap px-4 py-3 text-right ${
+                    className={`px-4 py-3 text-right align-top ${
                       dimmed ? '' : directOnly ? 'text-sky-700' : 'text-slate-900'
                     }`}
                   >
                     <div
-                      className={`font-mono ${!dimmed && !directOnly ? 'font-semibold' : ''}`}
+                      className={`font-mono whitespace-nowrap ${!dimmed && !directOnly ? 'font-semibold' : ''}`}
                     >
                       {formatFundLimit(f)}
                     </div>
-                    {formatFundLimitHint(f) && (
+                    {limitHint && (
                       <div
-                        className={`mt-0.5 text-xs ${
+                        className={`mt-0.5 truncate text-xs ${
                           directOnly ? 'text-sky-600' : 'text-slate-400'
                         }`}
+                        title={limitHint}
                       >
-                        {formatFundLimitHint(f)}
+                        {limitHint}
                       </div>
                     )}
                   </td>
