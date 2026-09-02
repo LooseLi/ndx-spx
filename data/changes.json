@@ -1,5 +1,34 @@
 [
   {
+    "at": "2026-09-02T03:32:32.452Z",
+    "changes": [
+      {
+        "kind": "direct_only",
+        "code": "022525",
+        "name": "天弘纳斯达克100指数发起(QDII)D",
+        "company": "天弘基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 0,
+        "toLimit": null,
+        "fromState": "suspended",
+        "toState": "direct_only"
+      },
+      {
+        "kind": "direct_only",
+        "code": "022523",
+        "name": "天弘标普500发起(QDII-FOF)D",
+        "company": "天弘基金",
+        "index": "SPX",
+        "currency": "CNY",
+        "fromLimit": 0,
+        "toLimit": null,
+        "fromState": "suspended",
+        "toState": "direct_only"
+      }
+    ]
+  },
+  {
     "at": "2026-09-01T16:34:44.102Z",
     "changes": [
       {
