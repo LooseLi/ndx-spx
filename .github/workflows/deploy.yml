@@ -1,8 +1,14 @@
 name: 部署网页
 
 on:
-  # 机器人每次回写数据都会 push，从而自动刷新页面
+  # 人工 push 代码变更时部署
   push:
+    branches: [main]
+  # 额度监控用 GITHUB_TOKEN push 不会触发 push 事件（GitHub 防循环机制），
+  # 因此在额度监控完成后通过 workflow_run 衔接部署
+  workflow_run:
+    workflows: [额度监控]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -18,9 +24,17 @@ concurrency:
 
 jobs:
   build:
+    # workflow_run 仅在额度监控成功时部署；push / 手动触发不受影响
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      # workflow_run 的 head_sha 是监控任务「开始时」的 commit，不含 bot 新 push 的数据。
+      # 必须拉分支最新 tip，才能读到刚回写的 data/latest.json
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
 
       - uses: actions/setup-node@v5
         with:
@@ -48,6 +62,9 @@ jobs:
 
   deploy:
     needs: build
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

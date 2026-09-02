@@ -53,7 +53,7 @@ npm test                 # 跑 diff 逻辑测试
 
 **抓取**走 GitHub Actions，`.github/workflows/track.yml` 已配好，交易日北京时间 08:30 / 11:40 / 14:10 / 20:10 各跑一次，抓完把 `data/` 提交回仓库。手动触发时可勾选同时重建基金池。
 
-**网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」，之后每次 push（包括机器人回写数据）都会自动重新部署。
+**网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」。人工 push 代码会触发部署；额度监控 bot 用 `GITHUB_TOKEN` push 数据不会触发 push 事件，因此在监控 workflow 完成后通过 `workflow_run` 自动衔接部署。
 
 默认地址是 `https://<用户名>.github.io/ndx-spx/`。但如果账号下的 `<用户名>.github.io` 仓库绑定了自定义域名，GitHub 会让所有 project site 都走那个域名，地址变成 `https://<自定义域名>/ndx-spx/`——路径部分不变，所以 `BASE_PATH` 无需调整。本项目当前部署在 https://resume.looseli.top/ndx-spx/ 。
 
