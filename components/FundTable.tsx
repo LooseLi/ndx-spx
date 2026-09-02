@@ -291,15 +291,15 @@ function SortHeader({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 transition ${
+      className={`inline-flex w-fit flex-none items-center gap-1 rounded-md px-2 py-1 transition ${
         active
           ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200'
           : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
       }`}
       title={active ? (dir === 'desc' ? '点击切换为升序' : '点击切换为降序') : '点击排序'}
     >
-      {label}
       <SortIcon active={active} dir={dir} />
+      {label}
     </button>
   )
 }

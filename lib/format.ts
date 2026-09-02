@@ -55,7 +55,7 @@ export function formatFundLimit(fund: LimitDisplayFund): string {
 /** 额度列副文案，解释渠道差异或指引去 App 查看 */
 export function formatFundLimitHint(fund: LimitDisplayFund): string | null {
   if (fund.state === 'direct_only') {
-    return fund.company ? `具体额度请在${fund.company} App 上查看` : '具体额度请在基金公司 App 上查看'
+    return '基金 App 查看额度'
   }
   return null
 }
