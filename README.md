@@ -9,7 +9,7 @@
 - 自动维护基金池，覆盖全市场纳指100 / 标普500 场外基金（当前 82 只，含人民币与美元份额）
 - 定时抓取每只基金的申购状态、单日累计限额、申购起点、定投状态
 - 与上次快照比对，识别代销恢复申购、代销额度升降、暂停申购、直销开放等变更
-- 页面与推送均标注「代销额度」；仅直销份额不显示数字，引导至基金公司 App 查看
+- 页面标注代销额度与仅直销份额；推送只报变更和当前最宽松的代销额度，详情去网页看
 - 变更推送到飞书 / 企业微信 / 个人微信，无变更时完全静默
 - 静态网页展示当前全部额度与近期变动，支持按指数、币种、可申购状态筛选
 - 每日快照进 git，历史可追溯
@@ -51,7 +51,7 @@ npm test                 # 跑 diff 逻辑测试
 
 ## 部署
 
-**抓取**走 GitHub Actions，`.github/workflows/track.yml` 已配好，交易日北京时间 08:30 / 11:40 / 14:10 / 20:10 各跑一次，抓完把 `data/` 提交回仓库。手动触发时可勾选同时重建基金池。
+**抓取**由 Cloudflare Worker 在交易日北京时间 09:15 / 12:15 / 14:15 / 18:15 触发 GitHub Actions（`workflow_dispatch`）。配置步骤和 Worker 代码见 [docs/cloudflare-worker.md](docs/cloudflare-worker.md)。抓完把 `data/` 提交回仓库。GitHub 上也可手动 Run workflow，并可勾选同时重建基金池。
 
 **网页**是纯静态导出，由 `.github/workflows/deploy.yml` 部署到 GitHub Pages。首次使用需要到 Settings → Pages 把 Source 选为「GitHub Actions」。人工 push 代码会触发部署；额度监控 bot 用 `GITHUB_TOKEN` push 数据不会触发 push 事件，因此在监控 workflow 完成后通过 `workflow_run` 自动衔接部署。
 

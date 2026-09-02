@@ -1,4 +1,4 @@
-import { CHANGE_META, INDEX_LABEL, describeChange, formatFundLimit } from '@/lib/format'
+import { CHANGE_META, describeChange, formatFundLimit } from '@/lib/format'
 import type { Change } from '@/lib/types'
 import type { NotifyPayload } from './types'
 
@@ -22,7 +22,10 @@ export function renderMarkdown(payload: NotifyPayload): string {
     const meta = CHANGE_META[kind]
     lines.push(`**${meta.emoji} ${meta.label}（${list.length}）**`)
     for (const c of list) {
-      lines.push(describeChange(c).split('\n').slice(0, 2).join('\n'))
+      lines.push(`· ${describeChange(c)}`)
+    }
+    if (kind === 'direct_only') {
+      lines.push('代销不可买，具体额度请在对应基金公司 App 上查看')
     }
     lines.push('')
   }
@@ -37,17 +40,7 @@ export function renderMarkdown(payload: NotifyPayload): string {
   if (buyable.length > 0) {
     lines.push('**当前代销额度最宽松（人民币份额）**')
     for (const f of buyable) {
-      lines.push(`· ${INDEX_LABEL[f.index]}｜${f.name} (${f.code})　${formatFundLimit(f)}`)
-    }
-    lines.push('（代销额度，直销 App 可能不同）')
-    lines.push('')
-  }
-
-  const directOnly = snapshot.funds.filter((f) => f.currency === 'CNY' && f.state === 'direct_only')
-  if (directOnly.length > 0) {
-    lines.push(`**仅直销可买（${directOnly.length} 只）**`)
-    for (const f of directOnly.slice(0, 5)) {
-      lines.push(`· ${f.name} (${f.code})　具体额度请在${f.company} App 上查看`)
+      lines.push(`· ${f.name} (${f.code})　${formatFundLimit(f)}`)
     }
     lines.push('')
   }

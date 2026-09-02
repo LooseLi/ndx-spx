@@ -1,13 +1,7 @@
 name: 额度监控
 
 on:
-  schedule:
-    # UTC 时间。对应北京时间 08:30 / 11:40 / 14:10 / 20:10，
-    # 覆盖盘前、上午收市、下午收市和晚间公告生效的几个时点。
-    - cron: '30 0 * * 1-5'
-    - cron: '40 3 * * 1-5'
-    - cron: '10 6 * * 1-5'
-    - cron: '10 12 * * 1-5'
+  # 定时由 Cloudflare Worker Cron 触发，见 docs/cloudflare-worker.md
   workflow_dispatch:
     inputs:
       rebuild_pool:
@@ -51,8 +45,7 @@ jobs:
 
       - run: npm ci
 
-      # 用 github.event.inputs 而不是 inputs：后者只在 workflow_dispatch 上下文存在，
-      # 而本 workflow 同时挂了 schedule，会导致整个文件校验失败、不被 Actions 注册
+      # 用 github.event.inputs：inputs 简写在部分触发上下文里不存在，校验会失败
       - name: 重建基金池
         if: github.event.inputs.rebuild_pool == 'true'
         run: npm run pool

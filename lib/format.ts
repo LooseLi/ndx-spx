@@ -108,27 +108,20 @@ export function indexTag(indexCode: string | null): string | null {
   }
 }
 
-/** 单条变更的一行文字描述，飞书和微信共用 */
+/** 单条变更的基金行，不含事件类型——分组标题里已经写过了 */
 export function describeChange(c: Change): string {
-  const meta = CHANGE_META[c.kind]
   const cur = c.currency === 'CNY' ? '' : `（${CURRENCY_LABEL[c.currency]}）`
-  const head = `${meta.emoji} ${meta.label}｜${c.name}${cur} (${c.code})`
+  const name = `${c.name}${cur} (${c.code})`
 
   if (c.kind === 'direct_only') {
-    return `${head}\n    代销渠道仍不可买，具体额度请在${c.company} App 上查看`
+    return name
   }
   if (c.kind === 'new_fund') {
-    return `${head}\n    当前代销额度 ${describeState(c.toState, c.toLimit, c.company)}`
+    return `${name}　当前代销 ${describeState(c.toState, c.toLimit, c.company)}`
   }
   const from = describeState(c.fromState, c.fromLimit ?? null, c.company)
   const to = describeState(c.toState, c.toLimit, c.company)
-  const tail =
-    c.toState === 'direct_only'
-      ? `（具体额度请在${c.company} App 上查看）`
-      : c.toState === 'open' || c.toState === 'limited'
-        ? '（代销额度，直销 App 可能不同）'
-        : ''
-  return `${head}\n    代销 ${from} → ${to}${tail}`
+  return `${name}　${from} → ${to}`
 }
 
 function describeState(

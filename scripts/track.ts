@@ -124,7 +124,10 @@ function printSummary(snapshot: Snapshot, changes: Change[], isFirstRun: boolean
     return
   }
   console.log(`\n--- 变更 ${changes.length} 项 ---`)
-  for (const c of changes) console.log(describeChange(c))
+  for (const c of changes) {
+    const meta = CHANGE_META[c.kind]
+    console.log(`${meta.emoji} ${meta.label}  ${describeChange(c)}`)
+  }
 }
 
 async function persist(snapshot: Snapshot, changes: Change[]) {
