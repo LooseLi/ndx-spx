@@ -1,5 +1,126 @@
 [
   {
+    "at": "2026-09-03T01:16:08.719Z",
+    "changes": [
+      {
+        "kind": "new_fund",
+        "code": "000055",
+        "name": "广发纳斯达克100ETF联接美元(QDII)A",
+        "company": "广发基金",
+        "index": "NDX",
+        "currency": "USD_WIRE",
+        "toLimit": null,
+        "toState": "direct_only"
+      },
+      {
+        "kind": "new_fund",
+        "code": "012751",
+        "name": "建信纳斯达克100指数(QDII)A美元现汇",
+        "company": "建信基金",
+        "index": "NDX",
+        "currency": "USD_WIRE",
+        "toLimit": null,
+        "toState": "direct_only"
+      },
+      {
+        "kind": "new_fund",
+        "code": "008971",
+        "name": "大成纳斯达克100ETF联接(QDII)C",
+        "company": "大成基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "toLimit": 10,
+        "toState": "limited"
+      },
+      {
+        "kind": "new_fund",
+        "code": "012752",
+        "name": "建信纳斯达克100指数(QDII)C人民币",
+        "company": "建信基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "toLimit": 10,
+        "toState": "limited"
+      },
+      {
+        "kind": "new_fund",
+        "code": "003722",
+        "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
+        "company": "易方达基金",
+        "index": "NDX",
+        "currency": "USD_WIRE",
+        "toLimit": 0,
+        "toState": "suspended"
+      },
+      {
+        "kind": "new_fund",
+        "code": "015518",
+        "name": "华夏纳斯达克100ETF发起式联接(QDII)A美元现汇",
+        "company": "华夏基金",
+        "index": "NDX",
+        "currency": "USD_WIRE",
+        "toLimit": 0,
+        "toState": "suspended"
+      },
+      {
+        "kind": "new_fund",
+        "code": "016055",
+        "name": "博时纳斯达克100ETF发起式联接(QDII)A人民币",
+        "company": "博时基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "toLimit": 0,
+        "toState": "suspended"
+      },
+      {
+        "kind": "new_fund",
+        "code": "018968",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)美元现汇",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "USD_WIRE",
+        "toLimit": 0,
+        "toState": "suspended"
+      },
+      {
+        "kind": "limit_down",
+        "code": "018966",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币A",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10000,
+        "toLimit": 2000,
+        "fromState": "limited",
+        "toState": "limited"
+      },
+      {
+        "kind": "limit_down",
+        "code": "018967",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币C",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10000,
+        "toLimit": 2000,
+        "fromState": "limited",
+        "toState": "limited"
+      },
+      {
+        "kind": "limit_down",
+        "code": "021773",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币E",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10000,
+        "toLimit": 2000,
+        "fromState": "limited",
+        "toState": "limited"
+      }
+    ]
+  },
+  {
     "at": "2026-09-02T03:32:32.452Z",
     "changes": [
       {
