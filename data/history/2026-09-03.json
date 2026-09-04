@@ -1,17 +1,25 @@
 {
-  "fetchedAt": "2026-09-02T10:16:22.703Z",
-  "okCount": 74,
-  "failed": [
-    "000055",
-    "003722",
-    "008971",
-    "012751",
-    "012752",
-    "015518",
-    "016055",
-    "018968"
-  ],
+  "fetchedAt": "2026-09-03T10:16:09.199Z",
+  "okCount": 82,
+  "failed": [],
   "funds": [
+    {
+      "code": "000055",
+      "name": "广发纳斯达克100ETF联接美元(QDII)A",
+      "company": "广发基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "direct_only",
+      "stateText": "限大额",
+      "stateNote": "仅广发基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
+      "limit": null,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 22.3,
+      "scale": 12223128151.65
+    },
     {
       "code": "000834",
       "name": "大成纳斯达克100ETF联接(QDII)A",
@@ -26,8 +34,25 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.24,
+      "yield1y": 16.64,
       "scale": 4886894194.73
+    },
+    {
+      "code": "003722",
+      "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
+      "company": "易方达基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 22.55,
+      "scale": 1782646168.38
     },
     {
       "code": "006479",
@@ -43,7 +68,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.08,
+      "yield1y": 16.47,
       "scale": 6492998549.28
     },
     {
@@ -60,8 +85,59 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 23.66,
+      "yield1y": 22.07,
       "scale": 6492998549.28
+    },
+    {
+      "code": "008971",
+      "name": "大成纳斯达克100ETF联接(QDII)C",
+      "company": "大成基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "C",
+      "state": "limited",
+      "stateText": "限大额",
+      "stateNote": "限大额(单日累计购买上限10元。)",
+      "limit": 10,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 16.29,
+      "scale": 1110149170.7
+    },
+    {
+      "code": "012751",
+      "name": "建信纳斯达克100指数(QDII)A美元现汇",
+      "company": "建信基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "direct_only",
+      "stateText": "限大额",
+      "stateNote": "仅建信基金 App 直销可买，代销接口不披露额度，需打开 App 查看",
+      "limit": null,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 21.72,
+      "scale": 2176385223.52
+    },
+    {
+      "code": "012752",
+      "name": "建信纳斯达克100指数(QDII)C人民币",
+      "company": "建信基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "C",
+      "state": "limited",
+      "stateText": "限大额",
+      "stateNote": "限大额(单日累计购买上限10元。)",
+      "limit": 10,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 15.86,
+      "scale": 1288271997.75
     },
     {
       "code": "012753",
@@ -77,7 +153,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 22.86,
+      "yield1y": 21.36,
       "scale": 1288271997.75
     },
     {
@@ -145,7 +221,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.73,
+      "yield1y": 17.61,
       "scale": 322719698.67
     },
     {
@@ -162,8 +238,42 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.38,
+      "yield1y": 17.26,
       "scale": 168065142.82
+    },
+    {
+      "code": "015518",
+      "name": "华夏纳斯达克100ETF发起式联接(QDII)A美元现汇",
+      "company": "华夏基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 25.07,
+      "scale": 322719698.67
+    },
+    {
+      "code": "016055",
+      "name": "博时纳斯达克100ETF发起式联接(QDII)A人民币",
+      "company": "博时基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "A",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 19.36,
+      "scale": 1504092578.8
     },
     {
       "code": "016056",
@@ -179,7 +289,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 25.39,
+      "yield1y": 25.1,
       "scale": 1504092578.8
     },
     {
@@ -196,7 +306,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 19.39,
+      "yield1y": 19,
       "scale": 707176698.32
     },
     {
@@ -213,7 +323,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 25.04,
+      "yield1y": 24.7,
       "scale": 707176698.32
     },
     {
@@ -230,7 +340,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.37,
+      "yield1y": 16.84,
       "scale": 6210457713.69
     },
     {
@@ -247,7 +357,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.25,
+      "yield1y": 16.73,
       "scale": 4832996804.46
     },
     {
@@ -264,7 +374,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 17.14,
+      "yield1y": 18.27,
       "scale": 2076998722.98
     },
     {
@@ -281,7 +391,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.85,
+      "yield1y": 17.98,
       "scale": 1640123827.78
     },
     {
@@ -298,7 +408,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 22.79,
+      "yield1y": 23.97,
       "scale": 2076998722.98
     },
     {
@@ -315,7 +425,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 22.48,
+      "yield1y": 23.68,
       "scale": 1640123827.78
     },
     {
@@ -332,7 +442,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.77,
+      "yield1y": 17.22,
       "scale": 3075464626.64
     },
     {
@@ -349,7 +459,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.54,
+      "yield1y": 17,
       "scale": 2933548906.84
     },
     {
@@ -361,12 +471,12 @@
       "shareClass": "A",
       "state": "limited",
       "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限10000元。)",
-      "limit": 10000,
+      "stateNote": "限大额(单日累计购买上限2000元。)",
+      "limit": 2000,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.93,
+      "yield1y": 15.42,
       "scale": 1633433512.76
     },
     {
@@ -378,13 +488,30 @@
       "shareClass": "C",
       "state": "limited",
       "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限10000元。)",
-      "limit": 10000,
+      "stateNote": "限大额(单日累计购买上限2000元。)",
+      "limit": 2000,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.47,
+      "yield1y": 14.96,
       "scale": 1108805510.1
+    },
+    {
+      "code": "018968",
+      "name": "汇添富纳斯达克100ETF发起式联接(QDII)美元现汇",
+      "company": "汇添富基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 20.97,
+      "scale": 22721236.82
     },
     {
       "code": "018969",
@@ -400,7 +527,7 @@
       "redeemStatus": "暂停赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 23.22,
+      "yield1y": 21.77,
       "scale": 0
     },
     {
@@ -417,7 +544,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 19.06,
+      "yield1y": 17.52,
       "scale": 2968994604.47
     },
     {
@@ -434,7 +561,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.71,
+      "yield1y": 17.18,
       "scale": 1080342036.99
     },
     {
@@ -451,7 +578,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 24.69,
+      "yield1y": 23.18,
       "scale": 14619033.74
     },
     {
@@ -468,7 +595,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 24.3,
+      "yield1y": 22.81,
       "scale": 13617346.59
     },
     {
@@ -485,7 +612,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.95,
+      "yield1y": 17.41,
       "scale": 967918008.71
     },
     {
@@ -502,7 +629,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.71,
+      "yield1y": 17.17,
       "scale": 428848157.56
     },
     {
@@ -519,7 +646,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.3,
+      "yield1y": 17.41,
       "scale": 816089711.13
     },
     {
@@ -536,7 +663,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16,
+      "yield1y": 17.11,
       "scale": 638954440.78
     },
     {
@@ -553,7 +680,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.7,
+      "yield1y": 17.18,
       "scale": 2178357942.75
     },
     {
@@ -570,7 +697,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.23,
+      "yield1y": 16.72,
       "scale": 1517237630.03
     },
     {
@@ -587,7 +714,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.31,
+      "yield1y": 16.78,
       "scale": 1062873419.57
     },
     {
@@ -604,7 +731,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.02,
+      "yield1y": 16.49,
       "scale": 405558326.85
     },
     {
@@ -621,7 +748,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.32,
+      "yield1y": 16.79,
       "scale": 3136027483.82
     },
     {
@@ -633,12 +760,12 @@
       "shareClass": "E",
       "state": "limited",
       "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限10000元。)",
-      "limit": 10000,
+      "stateNote": "限大额(单日累计购买上限2000元。)",
+      "limit": 2000,
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.82,
+      "yield1y": 15.31,
       "scale": 364028399.96
     },
     {
@@ -655,7 +782,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.09,
+      "yield1y": 16.48,
       "scale": 2147321530.93
     },
     {
@@ -672,7 +799,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.84,
+      "yield1y": 17.96,
       "scale": 24300350.52
     },
     {
@@ -689,7 +816,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.54,
+      "yield1y": 17,
       "scale": 170782223.49
     },
     {
@@ -706,7 +833,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 16.13,
+      "yield1y": 17.25,
       "scale": 59782000.32
     },
     {
@@ -723,7 +850,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 17.31,
+      "yield1y": 15.86,
       "scale": 51581579.51
     },
     {
@@ -740,7 +867,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 19.55,
+      "yield1y": 19.16,
       "scale": 170421847.75
     },
     {
@@ -808,7 +935,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 19.68,
+      "yield1y": 18.05,
       "scale": 2177013836.58
     },
     {
@@ -842,7 +969,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "NDX100",
       "indexName": "纳斯达克100指数",
-      "yield1y": 18.31,
+      "yield1y": 16.69,
       "scale": 12223128151.65
     },
     {
@@ -859,7 +986,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 17.69,
+      "yield1y": 18.96,
       "scale": 1543416327.36
     },
     {
@@ -876,7 +1003,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.01,
+      "yield1y": 13.42,
       "scale": 1285578443.52
     },
     {
@@ -893,7 +1020,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": null,
       "indexName": null,
-      "yield1y": 12.67,
+      "yield1y": 11.74,
       "scale": 2525374707.81
     },
     {
@@ -910,7 +1037,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": null,
       "indexName": null,
-      "yield1y": 12.39,
+      "yield1y": 11.46,
       "scale": 1606787338.13
     },
     {
@@ -927,7 +1054,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
-      "yield1y": 10.56,
+      "yield1y": 9.66,
       "scale": 209635785.48
     },
     {
@@ -944,7 +1071,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 11.89,
+      "yield1y": 13.11,
       "scale": 123499090.32
     },
     {
@@ -961,7 +1088,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 17.3,
+      "yield1y": 18.52,
       "scale": 123499090.32
     },
     {
@@ -978,7 +1105,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
-      "yield1y": 16.13,
+      "yield1y": 15.27,
       "scale": 730385358.59
     },
     {
@@ -995,7 +1122,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.76,
+      "yield1y": 19.29,
       "scale": 6466845879.52
     },
     {
@@ -1012,7 +1139,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.34,
+      "yield1y": 18.87,
       "scale": 1285578443.52
     },
     {
@@ -1029,7 +1156,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
-      "yield1y": 15.78,
+      "yield1y": 14.92,
       "scale": 209635785.48
     },
     {
@@ -1046,7 +1173,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.01,
+      "yield1y": 12.17,
       "scale": 132270847.93
     },
     {
@@ -1063,7 +1190,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 12.68,
+      "yield1y": 11.83,
       "scale": 60107314.39
     },
     {
@@ -1080,7 +1207,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.5,
+      "yield1y": 12.69,
       "scale": 5303168704.85
     },
     {
@@ -1097,7 +1224,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.83,
+      "yield1y": 18.13,
       "scale": 5303168704.85
     },
     {
@@ -1114,7 +1241,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.83,
+      "yield1y": 18.13,
       "scale": 5303168704.85
     },
     {
@@ -1131,7 +1258,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 11.33,
+      "yield1y": 12.32,
       "scale": 318818920.47
     },
     {
@@ -1148,7 +1275,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 11,
+      "yield1y": 11.99,
       "scale": 165720882.27
     },
     {
@@ -1165,7 +1292,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 18.14,
+      "yield1y": 19.44,
       "scale": 318818920.47
     },
     {
@@ -1182,7 +1309,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.4,
+      "yield1y": 13.81,
       "scale": 2304202372.31
     },
     {
@@ -1199,7 +1326,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.17,
+      "yield1y": 12.34,
       "scale": 1851640897.65
     },
     {
@@ -1216,7 +1343,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": null,
       "indexName": null,
-      "yield1y": 12.38,
+      "yield1y": 11.45,
       "scale": 183728006.85
     },
     {
@@ -1233,7 +1360,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 13.41,
+      "yield1y": 13.82,
       "scale": 6466845879.52
     },
     {
@@ -1250,7 +1377,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SP500EWTR",
       "indexName": "S&P 500 EQUAL WEIGHTED TOTAL RETURN",
-      "yield1y": 10.89,
+      "yield1y": 9.98,
       "scale": 730385358.59
     },
     {
@@ -1267,7 +1394,7 @@
       "redeemStatus": "开放赎回",
       "indexCode": "SPX",
       "indexName": "标准普尔500指数",
-      "yield1y": 12.3,
+      "yield1y": 13.52,
       "scale": 1543416327.36
     }
   ]
