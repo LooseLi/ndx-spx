@@ -24,8 +24,8 @@ async function request(url: string, referer = 'http://fund.eastmoney.com/'): Pro
       return await res.text()
     } catch (err) {
       lastErr = err
-      // 退避重试，避免被限流后连续打空
-      if (attempt < RETRY) await sleep(500 * attempt)
+      // 连接失败往往是 runner 出口抖动，多等一会儿再打，避免三次都挤在同一秒
+      if (attempt < RETRY) await sleep(attempt === 1 ? 1000 : 3000)
     }
   }
   throw new Error(`请求失败 ${url}: ${lastErr instanceof Error ? lastErr.message : lastErr}`)

@@ -9,6 +9,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fetchFundSnapshot, mapLimit } from './lib/eastmoney'
 import { diffSnapshots } from './lib/diff'
+import { abortReason, assembleFunds } from './lib/merge'
 import { CHANGE_META, describeChange, formatFundLimit, STATE_LABEL } from '@/lib/format'
 import type { Change, PoolEntry, Snapshot } from '@/lib/types'
 import { dispatch, enabledNotifiers } from './notifiers'
@@ -20,8 +21,6 @@ const CHANGES_FILE = path.join(DATA_DIR, 'changes.json')
 const HISTORY_DIR = path.join(DATA_DIR, 'history')
 
 const CONCURRENCY = 8
-/** 失败率超过这个比例就认为数据源异常，放弃本轮，不污染基线 */
-const MAX_FAILURE_RATIO = 0.3
 /** 变更日志保留条数，够前端时间线展示 */
 const CHANGES_KEEP = 300
 
@@ -39,25 +38,33 @@ async function main() {
     console.warn(`[抓取失败] ${f.item.code} ${f.item.name}: ${f.error?.message}`)
   }
 
-  const failureRatio = failed.length / pool.length
+  const failedCodes = failed.map((f) => f.item.code)
   console.log(`抓取完成：成功 ${funds.length}，失败 ${failed.length}`)
 
-  // 数据源大面积失败时宁可什么都不做，也不能写入残缺快照——
-  // 否则下一轮会把缺失的基金当成"新增"或"额度归零"疯狂误报
-  if (failureRatio > MAX_FAILURE_RATIO) {
-    throw new Error(
-      `失败率 ${(failureRatio * 100).toFixed(1)}% 超过阈值，疑似数据源异常，本轮放弃写入`,
+  const prev = await readJson<Snapshot>(LATEST_FILE)
+  const assembled = assembleFunds(funds, failedCodes, prev)
+  if (assembled.reusedCodes.length > 0) {
+    console.log(`失败基金沿用上次快照 ${assembled.reusedCodes.length} 只`)
+  }
+  if (assembled.droppedCodes.length > 0) {
+    console.warn(
+      `无法补齐、本轮丢弃 ${assembled.droppedCodes.length} 只: ${assembled.droppedCodes.join(', ')}`,
     )
+  }
+
+  // 没有上一份可补、或合并后覆盖率过低，才整轮放弃，避免残缺快照误报
+  const reason = abortReason(pool.length, failed.length, prev, assembled.funds.length)
+  if (reason) {
+    throw new Error(`疑似数据源异常，本轮放弃写入：${reason}`)
   }
 
   const snapshot: Snapshot = {
     fetchedAt: new Date().toISOString(),
     okCount: funds.length,
-    failed: failed.map((f) => f.item.code),
-    funds,
+    failed: failedCodes,
+    funds: assembled.funds,
   }
 
-  const prev = await readJson<Snapshot>(LATEST_FILE)
   const changes = diffSnapshots(prev, snapshot)
 
   printSummary(snapshot, changes, prev === null)
