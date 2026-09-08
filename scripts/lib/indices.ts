@@ -1,5 +1,5 @@
 import { INDEX_LABEL } from '@/lib/format'
-import type { IndexKey, IndexQuote, IndicesSnapshot } from '@/lib/types'
+import type { IndexKey, IndexQuote, IndicesSnapshot, VixQuote } from '@/lib/types'
 
 const UA = 'Mozilla/5.0'
 const HOSTS = [
@@ -55,11 +55,23 @@ export function chartUrl(
   return `${host}/v8/finance/chart/${yahooSymbol}?interval=1d&period1=${PERIOD1}&period2=${nowSec}`
 }
 
-async function requestChart(yahooSymbol: string): Promise<string> {
+/** 只要最近收盘时不必拉全历史，缩短窗口降低 429 */
+export function lastCloseUrl(
+  yahooSymbol: string,
+  nowSec = Math.floor(Date.now() / 1000),
+  host = HOSTS[0],
+): string {
+  const period1 = nowSec - 40 * 24 * 3600
+  return `${host}/v8/finance/chart/${yahooSymbol}?interval=1d&period1=${period1}&period2=${nowSec}`
+}
+
+async function requestYahoo(
+  buildUrl: (host: string, nowSec: number) => string,
+): Promise<string> {
   const nowSec = Math.floor(Date.now() / 1000)
   let lastErr: unknown
   for (let attempt = 1; attempt <= RETRY; attempt++) {
-    const url = chartUrl(yahooSymbol, nowSec, HOSTS[(attempt - 1) % HOSTS.length])
+    const url = buildUrl(HOSTS[(attempt - 1) % HOSTS.length], nowSec)
     try {
       const res = await fetch(url, {
         headers: { 'User-Agent': UA, Accept: 'application/json' },
@@ -76,9 +88,7 @@ async function requestChart(yahooSymbol: string): Promise<string> {
       }
     }
   }
-  throw new Error(
-    `Yahoo 请求失败 ${yahooSymbol}: ${lastErr instanceof Error ? lastErr.message : lastErr}`,
-  )
+  throw new Error(`Yahoo 请求失败: ${lastErr instanceof Error ? lastErr.message : lastErr}`)
 }
 
 export function parseYahooChart(text: string): DailyBar[] {
@@ -141,23 +151,50 @@ export function summarizeBars(
   }
 }
 
+export function summarizeLastClose(symbol: string, name: string, bars: DailyBar[]): VixQuote {
+  let close: number | null = null
+  let closeDate = ''
+  for (const bar of bars) {
+    if (bar.close != null) {
+      close = bar.close
+      closeDate = bar.date
+    }
+  }
+  if (close == null || close <= 0) {
+    throw new Error(`${symbol} 日线无收盘`)
+  }
+  return { symbol, name, close: round2(close), closeDate }
+}
+
 async function fetchOne(item: (typeof TRACKED)[number]): Promise<IndexQuote> {
-  const text = await requestChart(item.yahoo)
+  const text = await requestYahoo((host, nowSec) => chartUrl(item.yahoo, nowSec, host))
   return summarizeBars(item.key, item.symbol, INDEX_LABEL[item.key], parseYahooChart(text))
 }
 
-/** 两只都成功才返回快照；任一失败返回 null，由调用方沿用旧文件 */
+async function fetchVix(): Promise<VixQuote> {
+  const text = await requestYahoo((host, nowSec) => lastCloseUrl('%5EVIX', nowSec, host))
+  return summarizeLastClose('^VIX', '恐慌指数', parseYahooChart(text))
+}
+
+/** 纳指/标普都成功才返回快照；VIX 失败时 vix 为 null，由调用方沿用旧值 */
 export async function fetchIndicesSnapshot(): Promise<IndicesSnapshot | null> {
   try {
-    // 串行，避免两条全历史日线并行把 Yahoo 打成 429
+    // 串行，避免全历史日线并行把 Yahoo 打成 429
     const quotes: IndexQuote[] = []
     for (const item of TRACKED) {
       quotes.push(await fetchOne(item))
+    }
+    let vix: VixQuote | null = null
+    try {
+      vix = await fetchVix()
+    } catch (err) {
+      console.warn(`VIX 抓取失败: ${err instanceof Error ? err.message : err}`)
     }
     return {
       fetchedAt: new Date().toISOString(),
       source: 'yahoo',
       indices: quotes,
+      vix,
     }
   } catch (err) {
     console.warn(`指数抓取失败，沿用上次: ${err instanceof Error ? err.message : err}`)

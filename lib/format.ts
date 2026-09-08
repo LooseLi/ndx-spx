@@ -89,6 +89,11 @@ export function formatDrawdown(pct: number): string {
   return `${pct.toFixed(2)}%`
 }
 
+/** VIX 点位，两位小数 */
+export function formatVix(n: number): string {
+  return n.toFixed(2)
+}
+
 /** 近一年收益率，带正负号 */
 export function formatYield(v: number | null): string {
   if (v === null) return '—'

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { chartUrl, parseYahooChart, summarizeBars, type DailyBar } from './indices'
+import { chartUrl, lastCloseUrl, parseYahooChart, summarizeBars, summarizeLastClose, type DailyBar } from './indices'
 
 const bars: DailyBar[] = [
   { date: '2024-01-02', high: 16800.5, close: 16700.1 },
@@ -82,4 +82,23 @@ test('日线不足以计算时抛错', () => {
     () => summarizeBars('NDX', '^NDX', '纳斯达克100', [{ date: '2026-01-01', high: null, close: null }]),
     /不足以计算回撤/,
   )
+})
+
+test('VIX 只取最后一根有效收盘，不算回撤', () => {
+  const q = summarizeLastClose('^VIX', '恐慌指数', [
+    { date: '2026-09-03', high: 16.2, close: 15.8 },
+    { date: '2026-09-04', high: null, close: null },
+    { date: '2026-09-05', high: 16.1, close: 15.74 },
+  ])
+  assert.equal(q.close, 15.74)
+  assert.equal(q.closeDate, '2026-09-05')
+  assert.equal(q.symbol, '^VIX')
+  assert.equal(q.name, '恐慌指数')
+})
+
+test('VIX 最近收盘 URL 不拉 1980 起的全历史', () => {
+  const url = lastCloseUrl('%5EVIX', 1_700_000_000)
+  assert.match(url, /period1=1696544000/)
+  assert.match(url, /period2=1700000000/)
+  assert.doesNotMatch(url, /period1=315532800/)
 })

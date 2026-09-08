@@ -78,6 +78,9 @@ async function main() {
     for (const q of indices.indices) {
       console.log(`  ${q.name}  历史最高 ${q.ath}（${q.athDate}）  回撤 ${q.drawdownPct}%`)
     }
+    if (indices.vix) {
+      console.log(`  ${indices.vix.name}  ${indices.vix.close}（${indices.vix.closeDate}）`)
+    }
   }
 
   if (DRY_RUN) {
@@ -161,7 +164,12 @@ async function persist(snapshot: Snapshot, changes: Change[], indices: IndicesSn
   )
 
   if (indices) {
-    await writeFile(INDICES_FILE, JSON.stringify(indices, null, 2) + '\n', 'utf8')
+    let toWrite = indices
+    if (!indices.vix) {
+      const prevIdx = await readJson<IndicesSnapshot>(INDICES_FILE)
+      if (prevIdx?.vix) toWrite = { ...indices, vix: prevIdx.vix }
+    }
+    await writeFile(INDICES_FILE, JSON.stringify(toWrite, null, 2) + '\n', 'utf8')
   }
 
   if (changes.length === 0) return

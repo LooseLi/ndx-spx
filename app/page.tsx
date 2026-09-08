@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { FundTable } from '@/components/FundTable'
-import { INDEX_LABEL, formatDrawdown, formatIndexPoint } from '@/lib/format'
-import type { IndexQuote, IndicesSnapshot, Snapshot } from '@/lib/types'
+import { INDEX_LABEL, formatDrawdown, formatIndexPoint, formatVix } from '@/lib/format'
+import type { IndexQuote, IndicesSnapshot, Snapshot, VixQuote } from '@/lib/types'
 
 async function readJson<T>(name: string): Promise<T | null> {
   try {
@@ -50,11 +50,16 @@ export default async function Page() {
         </p>
       </header>
 
-      {indices && indices.indices.length > 0 && (
-        <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {indices && (indices.indices.length > 0 || indices.vix) && (
+        <div
+          className={`mb-8 grid grid-cols-1 gap-3 ${
+            indices.vix ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'
+          }`}
+        >
           {indices.indices.map((quote) => (
             <IndexCard key={quote.key} quote={quote} />
           ))}
+          {indices.vix && <VixCard quote={indices.vix} />}
         </div>
       )}
 
@@ -70,7 +75,7 @@ export default async function Page() {
         </p>
         <p>
           指数为价格指数（非全收益），历史最高取日线最高价，回撤相对最近一根已收盘 K
-          线，数据来自 Yahoo，随额度任务更新，非盘中实时。
+          线；VIX 为 CBOE 波动率指数最近收盘，不算回撤。数据来自 Yahoo，随额度任务更新，非盘中实时。
         </p>
         <p>
           本页面仅做信息聚合，不构成任何投资建议。
@@ -93,6 +98,24 @@ function IndexCard({ quote }: { quote: IndexQuote }) {
         历史最高 {formatIndexPoint(quote.ath)}
         <span className="text-slate-400">（{quote.athDate}）</span>
       </div>
+    </div>
+  )
+}
+
+function vixTone(close: number): string {
+  if (close >= 30) return 'text-red-600'
+  if (close >= 20) return 'text-amber-600'
+  return 'text-emerald-600'
+}
+
+function VixCard({ quote }: { quote: VixQuote }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="text-xs text-slate-500">{quote.name}</div>
+      <div className={`mt-1 text-2xl font-semibold tracking-tight ${vixTone(quote.close)}`}>
+        {formatVix(quote.close)}
+      </div>
+      <div className="mt-0.5 text-xs text-slate-400">最近收盘</div>
     </div>
   )
 }

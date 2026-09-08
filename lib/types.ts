@@ -82,6 +82,16 @@ export interface IndicesSnapshot {
   fetchedAt: string
   source: 'yahoo'
   indices: IndexQuote[]
+  /** CBOE VIX 最近收盘；不算回撤。缺省或 null 时页面不展示 */
+  vix?: VixQuote | null
+}
+
+/** 恐慌指数，只展示最近收盘点位 */
+export interface VixQuote {
+  symbol: string
+  name: string
+  close: number
+  closeDate: string
 }
 
 /** 一次完整抓取的快照文件 */
