@@ -11,13 +11,15 @@ import { fetchFundSnapshot, mapLimit } from './lib/eastmoney'
 import { diffSnapshots } from './lib/diff'
 import { abortReason, assembleFunds } from './lib/merge'
 import { CHANGE_META, describeChange, formatFundLimit, STATE_LABEL } from '@/lib/format'
-import type { Change, PoolEntry, Snapshot } from '@/lib/types'
+import { fetchIndicesSnapshot } from './lib/indices'
+import type { Change, IndicesSnapshot, PoolEntry, Snapshot } from '@/lib/types'
 import { dispatch, enabledNotifiers } from './notifiers'
 
 const DATA_DIR = path.join(process.cwd(), 'data')
 const POOL_FILE = path.join(DATA_DIR, 'pool.json')
 const LATEST_FILE = path.join(DATA_DIR, 'latest.json')
 const CHANGES_FILE = path.join(DATA_DIR, 'changes.json')
+const INDICES_FILE = path.join(DATA_DIR, 'indices.json')
 const HISTORY_DIR = path.join(DATA_DIR, 'history')
 
 const CONCURRENCY = 8
@@ -30,6 +32,7 @@ async function main() {
   const pool = JSON.parse(await readFile(POOL_FILE, 'utf8')) as PoolEntry[]
   console.log(`基金池 ${pool.length} 只，开始抓取（并发 ${CONCURRENCY}）...`)
 
+  const indicesPromise = fetchIndicesSnapshot()
   const results = await mapLimit(pool, CONCURRENCY, fetchFundSnapshot)
   const funds = results.flatMap((r) => (r.value ? [r.value] : []))
   const failed = results.filter((r) => r.error)
@@ -69,12 +72,20 @@ async function main() {
 
   printSummary(snapshot, changes, prev === null)
 
+  const indices = await indicesPromise
+  if (indices) {
+    console.log('\n--- 指数 ---')
+    for (const q of indices.indices) {
+      console.log(`  ${q.name}  历史最高 ${q.ath}（${q.athDate}）  回撤 ${q.drawdownPct}%`)
+    }
+  }
+
   if (DRY_RUN) {
     console.log('\n[dry-run] 跳过写入与推送')
     return
   }
 
-  await persist(snapshot, changes)
+  await persist(snapshot, changes, indices)
 
   if (changes.length === 0) {
     console.log('无变更，静默退出')
@@ -137,7 +148,7 @@ function printSummary(snapshot: Snapshot, changes: Change[], isFirstRun: boolean
   }
 }
 
-async function persist(snapshot: Snapshot, changes: Change[]) {
+async function persist(snapshot: Snapshot, changes: Change[], indices: IndicesSnapshot | null) {
   await mkdir(HISTORY_DIR, { recursive: true })
   await writeFile(LATEST_FILE, JSON.stringify(snapshot, null, 2) + '\n', 'utf8')
 
@@ -148,6 +159,10 @@ async function persist(snapshot: Snapshot, changes: Change[]) {
     JSON.stringify(snapshot, null, 2) + '\n',
     'utf8',
   )
+
+  if (indices) {
+    await writeFile(INDICES_FILE, JSON.stringify(indices, null, 2) + '\n', 'utf8')
+  }
 
   if (changes.length === 0) return
 

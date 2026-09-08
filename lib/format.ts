@@ -78,6 +78,17 @@ export const CHANGE_META: Record<ChangeKind, KindMeta> = {
   suspended: { emoji: '🔴', label: '暂停申购' },
 }
 
+/** 指数点位，千分位 + 两位小数 */
+export function formatIndexPoint(n: number): string {
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+/** 距高点回撤。接近 0 视为在高点 */
+export function formatDrawdown(pct: number): string {
+  if (Math.abs(pct) < 0.05) return '0.0%'
+  return `${pct.toFixed(1)}%`
+}
+
 /** 近一年收益率，带正负号 */
 export function formatYield(v: number | null): string {
   if (v === null) return '—'

@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { FundTable } from '@/components/FundTable'
-import { INDEX_LABEL, formatLimit } from '@/lib/format'
-import type { Snapshot } from '@/lib/types'
+import { INDEX_LABEL, formatDrawdown, formatIndexPoint } from '@/lib/format'
+import type { IndexQuote, IndicesSnapshot, Snapshot } from '@/lib/types'
 
 async function readJson<T>(name: string): Promise<T | null> {
   try {
@@ -25,6 +25,7 @@ function formatTime(iso: string, withTime = true): string {
 
 export default async function Page() {
   const snapshot = await readJson<Snapshot>('latest.json')
+  const indices = await readJson<IndicesSnapshot>('indices.json')
 
   if (!snapshot) {
     return (
@@ -38,17 +39,6 @@ export default async function Page() {
     )
   }
 
-  const cny = snapshot.funds.filter((f) => f.currency === 'CNY')
-  const buyable = cny.filter((f) => f.state === 'open' || f.state === 'limited')
-  const directOnly = cny.filter((f) => f.state === 'direct_only')
-  // 只要有一只不限额，"最高额度"就是不限额
-  const maxLimitText =
-    buyable.length === 0
-      ? '—'
-      : buyable.some((f) => f.limit === null)
-        ? '不限额'
-        : formatLimit(Math.max(...buyable.map((f) => f.limit ?? 0)))
-
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
       <header className="mb-8">
@@ -60,21 +50,13 @@ export default async function Page() {
         </p>
       </header>
 
-      <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat
-          label="代销可申购"
-          value={String(buyable.length)}
-          unit={`/ ${cny.length} 只`}
-          accent
-        />
-        <Stat label="仅直销可买" value={String(directOnly.length)} unit="只" />
-        <Stat label="最高代销额度" value={maxLimitText} unit="" />
-        <Stat
-          label="暂停申购"
-          value={String(cny.filter((f) => f.state === 'suspended').length)}
-          unit="只"
-        />
-      </div>
+      {indices && indices.indices.length > 0 && (
+        <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {indices.indices.map((quote) => (
+            <IndexCard key={quote.key} quote={quote} />
+          ))}
+        </div>
+      )}
 
       <FundTable funds={snapshot.funds} />
 
@@ -87,6 +69,10 @@ export default async function Page() {
           </strong>
         </p>
         <p>
+          指数为价格指数（非全收益），历史最高取日线最高价，回撤相对最近一根已收盘 K
+          线，数据来自 Yahoo，随额度任务更新，非盘中实时。
+        </p>
+        <p>
           本页面仅做信息聚合，不构成任何投资建议。
           {Object.values(INDEX_LABEL).join(' / ')} 场外基金均为 QDII，受外汇额度管理影响。
         </p>
@@ -95,29 +81,22 @@ export default async function Page() {
   )
 }
 
-function Stat({
-  label,
-  value,
-  unit,
-  accent,
-}: {
-  label: string
-  value: string
-  unit: string
-  accent?: boolean
-}) {
+function IndexCard({ quote }: { quote: IndexQuote }) {
+  const atHigh = quote.drawdownPct >= -0.05
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="text-xs text-slate-500">{label}</div>
-      <div className="mt-1 flex items-baseline gap-1">
-        <span
-          className={`text-2xl font-semibold tracking-tight ${
-            accent ? 'text-emerald-600' : 'text-slate-900'
-          }`}
-        >
-          {value}
-        </span>
-        {unit && <span className="text-xs text-slate-400">{unit}</span>}
+      <div className="text-xs text-slate-500">{quote.name}</div>
+      <div
+        className={`mt-1 text-2xl font-semibold tracking-tight ${
+          atHigh ? 'text-emerald-600' : 'text-amber-600'
+        }`}
+      >
+        {formatDrawdown(quote.drawdownPct)}
+      </div>
+      <div className="mt-0.5 text-xs text-slate-400">距高点回撤</div>
+      <div className="mt-3 text-sm text-slate-600">
+        历史最高 {formatIndexPoint(quote.ath)}
+        <span className="text-slate-400">（{quote.athDate}）</span>
       </div>
     </div>
   )

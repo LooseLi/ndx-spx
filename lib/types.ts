@@ -63,6 +63,27 @@ export interface FundSnapshot {
   scale: number | null
 }
 
+/** 指数日线汇总，供页面展示历史最高与回撤（现价不展示） */
+export interface IndexQuote {
+  key: IndexKey
+  symbol: string
+  name: string
+  /** 最近一根有效日线收盘，只用于算回撤 */
+  close: number
+  closeDate: string
+  /** 日线最高价的峰值 */
+  ath: number
+  athDate: string
+  /** (close - ath) / ath * 100，通常为负 */
+  drawdownPct: number
+}
+
+export interface IndicesSnapshot {
+  fetchedAt: string
+  source: 'yahoo'
+  indices: IndexQuote[]
+}
+
 /** 一次完整抓取的快照文件 */
 export interface Snapshot {
   /** ISO 时间戳 */
