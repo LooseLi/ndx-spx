@@ -1,0 +1,26 @@
+{
+  "fetchedAt": "2026-09-08T08:02:39.223Z",
+  "source": "yahoo",
+  "indices": [
+    {
+      "key": "NDX",
+      "symbol": "^NDX",
+      "name": "纳斯达克100",
+      "close": 29544.15,
+      "closeDate": "2026-09-04",
+      "ath": 30762.2,
+      "athDate": "2026-06-03",
+      "drawdownPct": -3.96
+    },
+    {
+      "key": "SPX",
+      "symbol": "^GSPC",
+      "name": "标普500",
+      "close": 7718.6,
+      "closeDate": "2026-09-04",
+      "ath": 7816.7,
+      "athDate": "2026-08-13",
+      "drawdownPct": -1.26
+    }
+  ]
+}
