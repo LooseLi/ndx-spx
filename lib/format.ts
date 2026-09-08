@@ -83,10 +83,10 @@ export function formatIndexPoint(n: number): string {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-/** 距高点回撤。接近 0 视为在高点 */
+/** 距高点回撤，与落盘一致保留两位小数。接近 0 视为在高点 */
 export function formatDrawdown(pct: number): string {
-  if (Math.abs(pct) < 0.05) return '0.0%'
-  return `${pct.toFixed(1)}%`
+  if (Math.abs(pct) < 0.005) return '0.00%'
+  return `${pct.toFixed(2)}%`
 }
 
 /** 近一年收益率，带正负号 */

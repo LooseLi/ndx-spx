@@ -82,15 +82,10 @@ export default async function Page() {
 }
 
 function IndexCard({ quote }: { quote: IndexQuote }) {
-  const atHigh = quote.drawdownPct >= -0.05
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="text-xs text-slate-500">{quote.name}</div>
-      <div
-        className={`mt-1 text-2xl font-semibold tracking-tight ${
-          atHigh ? 'text-emerald-600' : 'text-amber-600'
-        }`}
-      >
+      <div className="mt-1 text-2xl font-semibold tracking-tight text-emerald-600">
         {formatDrawdown(quote.drawdownPct)}
       </div>
       <div className="mt-0.5 text-xs text-slate-400">距高点回撤</div>
