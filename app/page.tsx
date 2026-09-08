@@ -53,15 +53,10 @@ export default async function Page() {
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
       <header className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          纳指100 / 标普500 场外基金额度
+          纳斯达克100 / 标普500 场外基金额度
         </h1>
         <p className="mt-2 text-sm text-slate-500">
           数据更新于 {formatTime(snapshot.fetchedAt)}
-          <span className="mx-2">·</span>
-          跟踪 {snapshot.funds.length} 只场外基金
-          {snapshot.failed.length > 0 && (
-            <span className="ml-2 text-amber-600">（{snapshot.failed.length} 只抓取失败）</span>
-          )}
         </p>
       </header>
 

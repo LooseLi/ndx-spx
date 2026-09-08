@@ -99,7 +99,7 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
         <Toggle checked={cnyOnly} onChange={setCnyOnly} label="仅人民币份额" />
         <Toggle checked={buyableOnly} onChange={setBuyableOnly} label="仅可买" />
 
-        <span className="ml-auto text-sm text-slate-500">共 {rows.length} 只</span>
+        {/* <span className="ml-auto text-sm text-slate-500">共 {rows.length} 只</span> */}
       </div>
 
       <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
