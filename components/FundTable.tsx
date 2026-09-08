@@ -5,7 +5,6 @@ import {
   CURRENCY_LABEL,
   INDEX_LABEL,
   formatFundLimit,
-  formatFundLimitHint,
   formatScale,
   formatYield,
   indexTag,
@@ -149,7 +148,6 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                 const dimmed = f.state === 'suspended' || f.state === 'unknown'
                 const directOnly = f.state === 'direct_only'
                 const tag = indexTag(f.indexCode)
-                const limitHint = formatFundLimitHint(f)
               return (
                 <tr
                   key={f.code}
@@ -199,25 +197,13 @@ export function FundTable({ funds }: { funds: FundSnapshot[] }) {
                     </div>
                   </td>
                   <td
-                    className={`px-4 py-3 text-right align-top ${
+                    className={`whitespace-nowrap px-4 py-3 text-right ${
                       dimmed ? '' : directOnly ? 'text-sky-700' : 'text-slate-900'
                     }`}
                   >
-                    <div
-                      className={`font-mono whitespace-nowrap ${!dimmed && !directOnly ? 'font-semibold' : ''}`}
-                    >
+                    <span className={!dimmed && !directOnly ? 'font-mono font-semibold' : directOnly ? '' : 'font-mono'}>
                       {formatFundLimit(f)}
-                    </div>
-                    {limitHint && (
-                      <div
-                        className={`mt-0.5 truncate text-xs ${
-                          directOnly ? 'text-sky-600' : 'text-slate-400'
-                        }`}
-                        title={limitHint}
-                      >
-                        {limitHint}
-                      </div>
-                    )}
+                    </span>
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-3 text-right font-mono ${

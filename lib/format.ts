@@ -44,20 +44,12 @@ export function formatFundLimit(fund: LimitDisplayFund): string {
     case 'suspended':
       return '不可申购'
     case 'direct_only':
-      return '—'
+      return '基金 App 查看额度'
     case 'unknown':
       return '未知'
     default:
       return formatLimit(fund.limit)
   }
-}
-
-/** 额度列副文案，解释渠道差异或指引去 App 查看 */
-export function formatFundLimitHint(fund: LimitDisplayFund): string | null {
-  if (fund.state === 'direct_only') {
-    return '基金 App 查看额度'
-  }
-  return null
 }
 
 export const CURRENCY_LABEL: Record<Currency, string> = {

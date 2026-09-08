@@ -1,13 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { FundTable } from '@/components/FundTable'
-import { CHANGE_META, INDEX_LABEL, formatFundLimit, formatLimit } from '@/lib/format'
-import type { Change, Snapshot } from '@/lib/types'
-
-interface ChangeLogEntry {
-  at: string
-  changes: Change[]
-}
+import { INDEX_LABEL, formatLimit } from '@/lib/format'
+import type { Snapshot } from '@/lib/types'
 
 async function readJson<T>(name: string): Promise<T | null> {
   try {
@@ -30,7 +25,6 @@ function formatTime(iso: string, withTime = true): string {
 
 export default async function Page() {
   const snapshot = await readJson<Snapshot>('latest.json')
-  const changeLog = (await readJson<ChangeLogEntry[]>('changes.json')) ?? []
 
   if (!snapshot) {
     return (
@@ -86,50 +80,6 @@ export default async function Page() {
           unit="只"
         />
       </div>
-
-      {changeLog.length > 0 && (
-        <section className="mb-8">
-          <h2 className="mb-3 text-sm font-semibold text-slate-700">最近代销额度变动</h2>
-          <div className="space-y-3">
-            {changeLog.slice(0, 5).map((entry) => (
-              <div
-                key={entry.at}
-                className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <div className="mb-2 text-xs text-slate-400">{formatTime(entry.at)}</div>
-                <ul className="space-y-1.5">
-                  {entry.changes.slice(0, 8).map((c) => (
-                    <li key={`${c.kind}-${c.code}`} className="flex flex-wrap items-baseline gap-x-2 text-sm">
-                      <span className="shrink-0">{CHANGE_META[c.kind].emoji}</span>
-                      <span className="font-medium text-slate-700">
-                        {CHANGE_META[c.kind].label}
-                      </span>
-                      <span className="text-slate-600">{c.name}</span>
-                      <span className="font-mono text-xs text-slate-400">{c.code}</span>
-                      <span className="ml-auto font-mono text-xs text-slate-500">
-                        {c.fromState !== undefined &&
-                          `${formatFundLimit({ state: c.fromState, limit: c.fromLimit ?? null, company: c.company })} → `}
-                        <span className="font-semibold text-slate-800">
-                          {formatFundLimit({
-                            state: c.toState,
-                            limit: c.toLimit,
-                            company: c.company,
-                          })}
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                {entry.changes.length > 8 && (
-                  <p className="mt-2 text-xs text-slate-400">
-                    还有 {entry.changes.length - 8} 项变动
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <FundTable funds={snapshot.funds} />
 
