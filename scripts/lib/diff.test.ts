@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { diffSnapshots } from './diff'
+import { diffSnapshots, notifiableChanges } from './diff'
 import type { FundSnapshot, PurchaseState, Snapshot } from '@/lib/types'
 
 function fund(over: Partial<FundSnapshot> & { code: string }): FundSnapshot {
@@ -134,5 +134,20 @@ test('同类事件内额度大的排前面', () => {
   assert.deepEqual(
     diffSnapshots(prev, curr).map((c) => c.code),
     ['000002', '000001'],
+  )
+})
+
+test('推送只保留代销额度相关，丢掉直销开放和新增基金', () => {
+  const prev = snap([fund({ code: '000001', ...suspended }), fund({ code: '000002', limit: 10 })])
+  const curr = snap([
+    fund({ code: '000001', ...directOnly }),
+    fund({ code: '000002', limit: 100 }),
+    fund({ code: '000003', limit: 50 }),
+  ])
+  const all = diffSnapshots(prev, curr).map((c) => c.kind)
+  assert.deepEqual(all.sort(), ['direct_only', 'limit_up', 'new_fund'].sort())
+  assert.deepEqual(
+    notifiableChanges(diffSnapshots(prev, curr)).map((c) => c.kind),
+    ['limit_up'],
   )
 })

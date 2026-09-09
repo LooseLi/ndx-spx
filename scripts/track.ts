@@ -8,7 +8,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fetchFundSnapshot, mapLimit } from './lib/eastmoney'
-import { diffSnapshots } from './lib/diff'
+import { diffSnapshots, notifiableChanges } from './lib/diff'
 import { abortReason, assembleFunds } from './lib/merge'
 import { CHANGE_META, describeChange, formatFundLimit, STATE_LABEL } from '@/lib/format'
 import { fetchIndicesSnapshot } from './lib/indices'
@@ -90,8 +90,9 @@ async function main() {
 
   await persist(snapshot, changes, indices)
 
-  if (changes.length === 0) {
-    console.log('无变更，静默退出')
+  const notify = notifiableChanges(changes)
+  if (notify.length === 0) {
+    console.log('无代销额度变更，静默退出')
     return
   }
 
@@ -102,8 +103,8 @@ async function main() {
   }
 
   const result = await dispatch({
-    title: buildTitle(changes),
-    changes,
+    title: buildTitle(notify),
+    changes: notify,
     snapshot,
     siteUrl: process.env.SITE_URL,
   })

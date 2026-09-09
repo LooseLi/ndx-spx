@@ -118,6 +118,17 @@ export const CHANGE_KINDS = [
 
 export type ChangeKind = (typeof CHANGE_KINDS)[number]
 
+/** 飞书等渠道只推代销额度相关：恢复/暂停、额度升降、取消限额。直销开放和新增基金不推。 */
+export const NOTIFY_KINDS = [
+  'reopened',
+  'limit_up',
+  'limit_removed',
+  'limit_down',
+  'suspended',
+] as const satisfies readonly ChangeKind[]
+
+export type NotifyKind = (typeof NOTIFY_KINDS)[number]
+
 export interface Change {
   kind: ChangeKind
   code: string

@@ -1,5 +1,5 @@
 import type { Change, FundSnapshot, PurchaseState, Snapshot } from '@/lib/types'
-import { CHANGE_KINDS } from '@/lib/types'
+import { CHANGE_KINDS, NOTIFY_KINDS } from '@/lib/types'
 
 /** 代销渠道能否直接买到。direct_only 需要去基金公司 App，不算 */
 function isBuyable(state: PurchaseState): boolean {
@@ -60,6 +60,12 @@ export function diffSnapshots(prev: Snapshot | null, curr: Snapshot): Change[] {
     // 同类型内额度大的排前面，更值得关注
     return (b.toLimit ?? Infinity) - (a.toLimit ?? Infinity)
   })
+}
+
+/** 推送用：丢掉直销开放、新增基金等非代销额度事件 */
+export function notifiableChanges(changes: Change[]): Change[] {
+  const allow = new Set<string>(NOTIFY_KINDS)
+  return changes.filter((c) => allow.has(c.kind))
 }
 
 /** null 代表不限额，视作正无穷 */
