@@ -1,12 +1,7 @@
 {
-  "fetchedAt": "2026-09-15T04:16:16.978Z",
-  "okCount": 78,
-  "failed": [
-    "003722",
-    "006479",
-    "008971",
-    "012752"
-  ],
+  "fetchedAt": "2026-09-15T06:16:08.488Z",
+  "okCount": 82,
+  "failed": [],
   "funds": [
     {
       "code": "000055",
@@ -43,6 +38,40 @@
       "scale": 4886894194.73
     },
     {
+      "code": "003722",
+      "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
+      "company": "易方达基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 20.99,
+      "scale": 1782646168.38
+    },
+    {
+      "code": "006479",
+      "name": "广发纳斯达克100ETF联接人民币(QDII)C",
+      "company": "广发基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "C",
+      "state": "limited",
+      "stateText": "限大额",
+      "stateNote": "限大额(单日累计购买上限2元。)",
+      "limit": 2,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 14.78,
+      "scale": 6492998549.28
+    },
+    {
       "code": "006480",
       "name": "广发纳斯达克100ETF联接美元(QDII)C",
       "company": "广发基金",
@@ -60,6 +89,23 @@
       "scale": 6492998549.28
     },
     {
+      "code": "008971",
+      "name": "大成纳斯达克100ETF联接(QDII)C",
+      "company": "大成基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "C",
+      "state": "limited",
+      "stateText": "限大额",
+      "stateNote": "限大额(单日累计购买上限10元。)",
+      "limit": 10,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 14.53,
+      "scale": 1110149170.7
+    },
+    {
       "code": "012751",
       "name": "建信纳斯达克100指数(QDII)A美元现汇",
       "company": "建信基金",
@@ -75,6 +121,23 @@
       "indexName": "纳斯达克100指数",
       "yield1y": 20.21,
       "scale": 2176385223.52
+    },
+    {
+      "code": "012752",
+      "name": "建信纳斯达克100指数(QDII)C人民币",
+      "company": "建信基金",
+      "index": "NDX",
+      "currency": "CNY",
+      "shareClass": "C",
+      "state": "limited",
+      "stateText": "限大额",
+      "stateNote": "限大额(单日累计购买上限10元。)",
+      "limit": 10,
+      "redeemStatus": "开放赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 14.32,
+      "scale": 1288271997.75
     },
     {
       "code": "012753",
@@ -1333,74 +1396,6 @@
       "indexName": "标准普尔500指数",
       "yield1y": 10.55,
       "scale": 1543416327.36
-    },
-    {
-      "code": "003722",
-      "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
-      "company": "易方达基金",
-      "index": "NDX",
-      "currency": "USD_WIRE",
-      "shareClass": "A",
-      "state": "suspended",
-      "stateText": "暂停申购",
-      "stateNote": null,
-      "limit": 0,
-      "redeemStatus": "开放赎回",
-      "indexCode": "NDX100",
-      "indexName": "纳斯达克100指数",
-      "yield1y": 20.99,
-      "scale": 1782646168.38
-    },
-    {
-      "code": "006479",
-      "name": "广发纳斯达克100ETF联接人民币(QDII)C",
-      "company": "广发基金",
-      "index": "NDX",
-      "currency": "CNY",
-      "shareClass": "C",
-      "state": "limited",
-      "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限2元。)",
-      "limit": 2,
-      "redeemStatus": "开放赎回",
-      "indexCode": "NDX100",
-      "indexName": "纳斯达克100指数",
-      "yield1y": 14.78,
-      "scale": 6492998549.28
-    },
-    {
-      "code": "008971",
-      "name": "大成纳斯达克100ETF联接(QDII)C",
-      "company": "大成基金",
-      "index": "NDX",
-      "currency": "CNY",
-      "shareClass": "C",
-      "state": "limited",
-      "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限10元。)",
-      "limit": 10,
-      "redeemStatus": "开放赎回",
-      "indexCode": "NDX100",
-      "indexName": "纳斯达克100指数",
-      "yield1y": 14.53,
-      "scale": 1110149170.7
-    },
-    {
-      "code": "012752",
-      "name": "建信纳斯达克100指数(QDII)C人民币",
-      "company": "建信基金",
-      "index": "NDX",
-      "currency": "CNY",
-      "shareClass": "C",
-      "state": "limited",
-      "stateText": "限大额",
-      "stateNote": "限大额(单日累计购买上限10元。)",
-      "limit": 10,
-      "redeemStatus": "开放赎回",
-      "indexCode": "NDX100",
-      "indexName": "纳斯达克100指数",
-      "yield1y": 14.32,
-      "scale": 1288271997.75
     }
   ]
 }
