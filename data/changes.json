@@ -1,5 +1,22 @@
 [
   {
+    "at": "2026-09-21T01:15:42.398Z",
+    "changes": [
+      {
+        "kind": "suspended",
+        "code": "006479",
+        "name": "广发纳斯达克100ETF联接人民币(QDII)C",
+        "company": "广发基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 2,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      }
+    ]
+  },
+  {
     "at": "2026-09-18T10:15:54.715Z",
     "changes": [
       {
