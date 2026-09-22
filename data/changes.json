@@ -1,5 +1,46 @@
 [
   {
+    "at": "2026-09-22T01:15:42.992Z",
+    "changes": [
+      {
+        "kind": "suspended",
+        "code": "019524",
+        "name": "华泰柏瑞纳斯达克100ETF发起式联接(QDII)A",
+        "company": "华泰柏瑞基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      },
+      {
+        "kind": "suspended",
+        "code": "019525",
+        "name": "华泰柏瑞纳斯达克100ETF发起式联接(QDII)C",
+        "company": "华泰柏瑞基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      },
+      {
+        "kind": "suspended",
+        "code": "022664",
+        "name": "华泰柏瑞纳斯达克100ETF发起式联接(QDII)I",
+        "company": "华泰柏瑞基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      }
+    ]
+  },
+  {
     "at": "2026-09-21T01:15:42.398Z",
     "changes": [
       {

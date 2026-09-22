@@ -1,32 +1,32 @@
 {
-  "fetchedAt": "2026-09-21T10:15:40.583Z",
+  "fetchedAt": "2026-09-22T01:15:35.529Z",
   "source": "yahoo",
   "indices": [
     {
       "key": "NDX",
       "symbol": "^NDX",
       "name": "纳斯达克100",
-      "close": 29644.17,
-      "closeDate": "2026-09-18",
+      "close": 30482.35,
+      "closeDate": "2026-09-21",
       "ath": 30762.2,
       "athDate": "2026-06-03",
-      "drawdownPct": -3.63
+      "drawdownPct": -0.91
     },
     {
       "key": "SPX",
       "symbol": "^GSPC",
       "name": "标普500",
-      "close": 7650.5,
-      "closeDate": "2026-09-18",
+      "close": 7764.7,
+      "closeDate": "2026-09-21",
       "ath": 7816.7,
       "athDate": "2026-08-13",
-      "drawdownPct": -2.13
+      "drawdownPct": -0.67
     }
   ],
   "vix": {
     "symbol": "^VIX",
     "name": "恐慌指数",
-    "close": 14.92,
+    "close": 14.87,
     "closeDate": "2026-09-21"
   }
 }
