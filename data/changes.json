@@ -1,5 +1,70 @@
 [
   {
+    "at": "2026-09-24T01:15:53.957Z",
+    "changes": [
+      {
+        "kind": "reopened",
+        "code": "014978",
+        "name": "华安纳斯达克100ETF联接(QDII)C",
+        "company": "华安基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 0,
+        "toLimit": 5,
+        "fromState": "suspended",
+        "toState": "limited"
+      },
+      {
+        "kind": "reopened",
+        "code": "040046",
+        "name": "华安纳斯达克100ETF联接(QDII)A",
+        "company": "华安基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 0,
+        "toLimit": 5,
+        "fromState": "suspended",
+        "toState": "limited"
+      },
+      {
+        "kind": "suspended",
+        "code": "018966",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币A",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      },
+      {
+        "kind": "suspended",
+        "code": "018967",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币C",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      },
+      {
+        "kind": "suspended",
+        "code": "021773",
+        "name": "汇添富纳斯达克100ETF发起式联接(QDII)人民币E",
+        "company": "汇添富基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 10,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      }
+    ]
+  },
+  {
     "at": "2026-09-23T10:16:17.007Z",
     "changes": [
       {
