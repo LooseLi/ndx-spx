@@ -1,5 +1,22 @@
 [
   {
+    "at": "2026-09-25T01:15:58.264Z",
+    "changes": [
+      {
+        "kind": "suspended",
+        "code": "160213",
+        "name": "国泰纳斯达克100指数",
+        "company": "国泰基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 100,
+        "toLimit": 0,
+        "fromState": "limited",
+        "toState": "suspended"
+      }
+    ]
+  },
+  {
     "at": "2026-09-24T10:16:17.156Z",
     "changes": [
       {
