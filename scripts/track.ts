@@ -11,7 +11,7 @@ import { fetchFundSnapshot, mapLimit } from './lib/eastmoney'
 import { diffSnapshots, notifiableChanges } from './lib/diff'
 import { abortReason, assembleFunds } from './lib/merge'
 import { CHANGE_META, describeChange, formatFundLimit, STATE_LABEL } from '@/lib/format'
-import { fetchIndicesSnapshot } from './lib/indices'
+import { fetchIndicesSnapshot, mergeCarriedQuotes } from './lib/indices'
 import type { Change, IndicesSnapshot, PoolEntry, Snapshot } from '@/lib/types'
 import { dispatch, enabledNotifiers } from './notifiers'
 
@@ -74,7 +74,7 @@ async function main() {
 
   const indices = await indicesPromise
   if (indices) {
-    console.log('\n--- 指数 ---')
+    console.log('\n--- 行情 ---')
     for (const q of indices.indices) {
       console.log(`  ${q.name}  历史最高 ${q.ath}（${q.athDate}）  回撤 ${q.drawdownPct}%`)
     }
@@ -165,11 +165,8 @@ async function persist(snapshot: Snapshot, changes: Change[], indices: IndicesSn
   )
 
   if (indices) {
-    let toWrite = indices
-    if (!indices.vix) {
-      const prevIdx = await readJson<IndicesSnapshot>(INDICES_FILE)
-      if (prevIdx?.vix) toWrite = { ...indices, vix: prevIdx.vix }
-    }
+    const prevIdx = await readJson<IndicesSnapshot>(INDICES_FILE)
+    const toWrite = mergeCarriedQuotes(indices, prevIdx)
     await writeFile(INDICES_FILE, JSON.stringify(toWrite, null, 2) + '\n', 'utf8')
   }
 

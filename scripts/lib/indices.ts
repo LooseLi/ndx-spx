@@ -1,5 +1,5 @@
 import { INDEX_LABEL } from '@/lib/format'
-import type { IndexKey, IndexQuote, IndicesSnapshot, VixQuote } from '@/lib/types'
+import type { IndexQuote, IndicesSnapshot, QuoteKey, VixQuote } from '@/lib/types'
 
 const UA = 'Mozilla/5.0'
 const HOSTS = [
@@ -12,9 +12,17 @@ const RETRY = 3
 /** Yahoo 的 range=max 经常只返回约半年数据，必须显式拉从 1980 起的日线才能算 ATH */
 const PERIOD1 = 315532800
 
-const TRACKED = [
-  { key: 'NDX' as const, symbol: '^NDX', yahoo: '%5ENDX' },
-  { key: 'SPX' as const, symbol: '^GSPC', yahoo: '%5EGSPC' },
+const TRACKED: Array<{
+  key: QuoteKey
+  symbol: string
+  yahoo: string
+  name: string
+  /** 失败则整份快照作废。SMH 失败只跳过，由落盘时沿用上次 */
+  required: boolean
+}> = [
+  { key: 'NDX', symbol: '^NDX', yahoo: '%5ENDX', name: INDEX_LABEL.NDX, required: true },
+  { key: 'SPX', symbol: '^GSPC', yahoo: '%5EGSPC', name: INDEX_LABEL.SPX, required: true },
+  { key: 'SMH', symbol: 'SMH', yahoo: 'SMH', name: 'SMH 半导体', required: false },
 ]
 
 export interface DailyBar {
@@ -114,7 +122,7 @@ export function parseYahooChart(text: string): DailyBar[] {
 }
 
 export function summarizeBars(
-  key: IndexKey,
+  key: QuoteKey,
   symbol: string,
   name: string,
   bars: DailyBar[],
@@ -168,7 +176,31 @@ export function summarizeLastClose(symbol: string, name: string, bars: DailyBar[
 
 async function fetchOne(item: (typeof TRACKED)[number]): Promise<IndexQuote> {
   const text = await requestYahoo((host, nowSec) => chartUrl(item.yahoo, nowSec, host))
-  return summarizeBars(item.key, item.symbol, INDEX_LABEL[item.key], parseYahooChart(text))
+  return summarizeBars(item.key, item.symbol, item.name, parseYahooChart(text))
+}
+
+/**
+ * 可选行情本轮没抓到时沿用上次，已抓到的不用旧值覆盖。
+ * VIX 同样：本轮为 null 时保留上一份。
+ */
+export function mergeCarriedQuotes(
+  next: IndicesSnapshot,
+  prev: IndicesSnapshot | null,
+): IndicesSnapshot {
+  const have = new Set(next.indices.map((q) => q.key))
+  const carried: IndexQuote[] = []
+  if (prev) {
+    for (const item of TRACKED) {
+      if (item.required || have.has(item.key)) continue
+      const old = prev.indices.find((q) => q.key === item.key)
+      if (old) carried.push(old)
+    }
+  }
+  return {
+    ...next,
+    indices: [...next.indices, ...carried],
+    vix: next.vix ?? prev?.vix ?? null,
+  }
 }
 
 async function fetchVix(): Promise<VixQuote> {
@@ -176,13 +208,19 @@ async function fetchVix(): Promise<VixQuote> {
   return summarizeLastClose('^VIX', '恐慌指数', parseYahooChart(text))
 }
 
-/** 纳指/标普都成功才返回快照；VIX 失败时 vix 为 null，由调用方沿用旧值 */
+/** 纳指/标普都成功才返回快照。SMH、VIX 失败时对应字段留空，由落盘沿用旧值 */
 export async function fetchIndicesSnapshot(): Promise<IndicesSnapshot | null> {
   try {
     // 串行，避免全历史日线并行把 Yahoo 打成 429
     const quotes: IndexQuote[] = []
     for (const item of TRACKED) {
-      quotes.push(await fetchOne(item))
+      try {
+        quotes.push(await fetchOne(item))
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err)
+        if (item.required) throw err
+        console.warn(`${item.name} 抓取失败，沿用上次: ${msg}`)
+      }
     }
     let vix: VixQuote | null = null
     try {

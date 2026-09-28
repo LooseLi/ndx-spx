@@ -51,11 +51,7 @@ export default async function Page() {
       </header>
 
       {indices && (indices.indices.length > 0 || indices.vix) && (
-        <div
-          className={`mb-8 grid grid-cols-1 gap-3 ${
-            indices.vix ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'
-          }`}
-        >
+        <div className={`mb-8 grid grid-cols-1 gap-3 ${quoteGridClass(indices)}`}>
           {indices.indices.map((quote) => (
             <IndexCard key={quote.key} quote={quote} />
           ))}
@@ -74,7 +70,8 @@ export default async function Page() {
           </strong>
         </p>
         <p>
-          指数为价格指数（非全收益），历史最高取日线最高价，回撤相对最近一根已收盘 K
+          纳斯达克100、标普500为价格指数（非全收益），SMH 为半导体 ETF
+          价格（拆股复权，不含分红调整）。历史最高取日线最高价，回撤相对最近一根已收盘 K
           线；VIX 为 CBOE 波动率指数最近收盘，不算回撤。数据来自 Yahoo，随额度任务更新，非盘中实时。
         </p>
         <p>
@@ -84,6 +81,13 @@ export default async function Page() {
       </footer>
     </main>
   )
+}
+
+function quoteGridClass(indices: IndicesSnapshot): string {
+  const count = indices.indices.length + (indices.vix ? 1 : 0)
+  if (count >= 4) return 'sm:grid-cols-2 lg:grid-cols-4'
+  if (count === 3) return 'sm:grid-cols-2 lg:grid-cols-3'
+  return 'sm:grid-cols-2'
 }
 
 function IndexCard({ quote }: { quote: IndexQuote }) {
@@ -96,7 +100,7 @@ function IndexCard({ quote }: { quote: IndexQuote }) {
       <div className="mt-0.5 text-xs text-slate-400">距高点回撤</div>
       <div className="mt-3 text-sm text-slate-600">
         历史最高 {formatIndexPoint(quote.ath)}
-        <span className="text-slate-400">（{quote.athDate}）</span>
+        <span className="whitespace-nowrap text-slate-400">（{quote.athDate}）</span>
       </div>
     </div>
   )

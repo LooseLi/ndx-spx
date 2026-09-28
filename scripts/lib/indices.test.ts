@@ -1,6 +1,15 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { chartUrl, lastCloseUrl, parseYahooChart, summarizeBars, summarizeLastClose, type DailyBar } from './indices'
+import {
+  chartUrl,
+  lastCloseUrl,
+  mergeCarriedQuotes,
+  parseYahooChart,
+  summarizeBars,
+  summarizeLastClose,
+  type DailyBar,
+} from './indices'
+import type { IndexQuote, IndicesSnapshot, VixQuote } from '@/lib/types'
 
 const bars: DailyBar[] = [
   { date: '2024-01-02', high: 16800.5, close: 16700.1 },
@@ -94,6 +103,49 @@ test('VIX 只取最后一根有效收盘，不算回撤', () => {
   assert.equal(q.closeDate, '2026-09-05')
   assert.equal(q.symbol, '^VIX')
   assert.equal(q.name, '恐慌指数')
+})
+
+function quote(partial: Pick<IndexQuote, 'key' | 'ath'> & Partial<IndexQuote>): IndexQuote {
+  return {
+    symbol: partial.key,
+    name: partial.key,
+    close: 1,
+    closeDate: '2026-09-01',
+    athDate: '2026-08-01',
+    drawdownPct: -1,
+    ...partial,
+  }
+}
+
+function snap(indices: IndexQuote[], vix: VixQuote | null, fetchedAt = '2026-09-09T00:00:00.000Z'): IndicesSnapshot {
+  return { fetchedAt, source: 'yahoo', indices, vix }
+}
+
+test('SMH 缺失时沿用上次，本轮已有的 SMH 和 VIX 不被旧值覆盖', () => {
+  const prevSmh = quote({ key: 'SMH', ath: 280, name: 'SMH 半导体', symbol: 'SMH' })
+  const nextSmh = quote({ key: 'SMH', ath: 300, name: 'SMH 半导体', symbol: 'SMH' })
+  const ndx = quote({ key: 'NDX', ath: 30000 })
+  const spx = quote({ key: 'SPX', ath: 7000 })
+  const oldVix: VixQuote = { symbol: '^VIX', name: '恐慌指数', close: 15, closeDate: '2026-09-01' }
+  const newVix: VixQuote = { symbol: '^VIX', name: '恐慌指数', close: 18, closeDate: '2026-09-08' }
+
+  const carried = mergeCarriedQuotes(snap([ndx, spx], null, 'new'), snap([prevSmh], oldVix, 'old'))
+  assert.deepEqual(carried.indices.map((q) => q.key), ['NDX', 'SPX', 'SMH'])
+  assert.equal(carried.indices[2].ath, 280)
+  assert.equal(carried.vix?.close, 15)
+  assert.equal(carried.fetchedAt, 'new')
+
+  const fresh = mergeCarriedQuotes(snap([ndx, spx, nextSmh], newVix, 'new'), snap([prevSmh], oldVix, 'old'))
+  assert.equal(fresh.indices[2].ath, 300)
+  assert.equal(fresh.vix?.close, 18)
+})
+
+test('没有上一份快照时保留本轮行情', () => {
+  const next = snap([quote({ key: 'NDX', ath: 1 })], null)
+  const merged = mergeCarriedQuotes(next, null)
+  assert.deepEqual(merged.indices, next.indices)
+  assert.equal(merged.vix, null)
+  assert.equal(merged.fetchedAt, next.fetchedAt)
 })
 
 test('VIX 最近收盘 URL 不拉 1980 起的全历史', () => {

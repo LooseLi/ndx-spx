@@ -1,5 +1,8 @@
-/** 跟踪的指数 */
+/** 跟踪的指数。基金池分类只用这两个，不要把 ETF 加进来 */
 export type IndexKey = 'NDX' | 'SPX'
+
+/** 页面行情卡片。SMH 是持仓 ETF，不参与基金池分类和额度推送 */
+export type QuoteKey = IndexKey | 'SMH'
 
 /** 份额计价币种。美元份额需要外币账户，普通用户通常只关心 CNY */
 export type Currency = 'CNY' | 'USD_WIRE' | 'USD_CASH'
@@ -63,9 +66,9 @@ export interface FundSnapshot {
   scale: number | null
 }
 
-/** 指数日线汇总，供页面展示历史最高与回撤（现价不展示） */
+/** 日线汇总，供页面展示历史最高与回撤（现价不展示）。指数与 ETF 共用 */
 export interface IndexQuote {
-  key: IndexKey
+  key: QuoteKey
   symbol: string
   name: string
   /** 最近一根有效日线收盘，只用于算回撤 */
