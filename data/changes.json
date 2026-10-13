@@ -1,5 +1,22 @@
 [
   {
+    "at": "2026-10-13T01:16:22.581Z",
+    "changes": [
+      {
+        "kind": "direct_only",
+        "code": "021778",
+        "name": "广发纳指100ETF联接(QDII)人民币F",
+        "company": "广发基金",
+        "index": "NDX",
+        "currency": "CNY",
+        "fromLimit": 0,
+        "toLimit": null,
+        "fromState": "suspended",
+        "toState": "direct_only"
+      }
+    ]
+  },
+  {
     "at": "2026-10-12T10:16:16.608Z",
     "changes": [
       {
