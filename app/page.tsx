@@ -102,6 +102,24 @@ function IndexCard({ quote }: { quote: IndexQuote }) {
         历史最高 {formatIndexPoint(quote.ath)}
         <span className="whitespace-nowrap text-slate-400">（{quote.athDate}）</span>
       </div>
+      {quote.key === 'NDX' && <DrawdownLevels ath={quote.ath} />}
+    </div>
+  )
+}
+
+const NDX_DRAWDOWN_LEVELS = [10, 20, 25, 30] as const
+
+function DrawdownLevels({ ath }: { ath: number }) {
+  return (
+    <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs">
+      {NDX_DRAWDOWN_LEVELS.map((pct) => (
+        <div key={pct} className="flex items-baseline justify-between gap-2">
+          <span className="text-slate-400">回撤 {pct}%</span>
+          <span className="font-mono text-slate-600">
+            {formatIndexPoint(ath * (1 - pct / 100))}
+          </span>
+        </div>
+      ))}
     </div>
   )
 }
