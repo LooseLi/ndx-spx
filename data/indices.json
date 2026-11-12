@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-12T06:15:34.701Z",
+  "fetchedAt": "2026-11-12T10:15:42.640Z",
   "source": "yahoo",
   "indices": [
     {
@@ -36,7 +36,7 @@
   "vix": {
     "symbol": "^VIX",
     "name": "恐慌指数",
-    "close": 17.49,
-    "closeDate": "2026-11-11"
+    "close": 18.19,
+    "closeDate": "2026-11-12"
   }
 }
