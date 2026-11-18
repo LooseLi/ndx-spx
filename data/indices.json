@@ -1,12 +1,12 @@
 {
-  "fetchedAt": "2026-11-18T04:16:13.646Z",
+  "fetchedAt": "2026-11-18T06:16:02.162Z",
   "source": "yahoo",
   "indices": [
     {
       "key": "NDX",
       "symbol": "^NDX",
       "name": "纳斯达克100",
-      "close": 27001.79,
+      "close": 27001.78,
       "closeDate": "2026-11-17",
       "ath": 31361.37,
       "athDate": "2026-10-06",
