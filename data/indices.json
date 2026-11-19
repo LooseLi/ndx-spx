@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-19T01:16:03.829Z",
+  "fetchedAt": "2026-11-19T04:16:11.473Z",
   "source": "yahoo",
   "indices": [
     {
@@ -26,11 +26,11 @@
       "key": "SMH",
       "symbol": "SMH",
       "name": "SMH 半导体",
-      "close": 460.1,
-      "closeDate": "2026-11-17",
+      "close": 459.54,
+      "closeDate": "2026-11-18",
       "ath": 671.83,
       "athDate": "2026-06-22",
-      "drawdownPct": -31.52
+      "drawdownPct": -31.6
     }
   ],
   "vix": {
