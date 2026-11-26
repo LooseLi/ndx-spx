@@ -1,7 +1,9 @@
 {
-  "fetchedAt": "2026-11-26T04:16:03.346Z",
-  "okCount": 82,
-  "failed": [],
+  "fetchedAt": "2026-11-26T06:16:09.491Z",
+  "okCount": 81,
+  "failed": [
+    "003722"
+  ],
   "funds": [
     {
       "code": "000055",
@@ -36,23 +38,6 @@
       "indexName": "纳斯达克100指数",
       "yield1y": -2.33,
       "scale": 4958120057.2
-    },
-    {
-      "code": "003722",
-      "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
-      "company": "易方达基金",
-      "index": "NDX",
-      "currency": "USD_WIRE",
-      "shareClass": "A",
-      "state": "suspended",
-      "stateText": "暂停申购",
-      "stateNote": null,
-      "limit": 0,
-      "redeemStatus": "暂停赎回",
-      "indexCode": "NDX100",
-      "indexName": "纳斯达克100指数",
-      "yield1y": 5.79,
-      "scale": 1741351164.38
     },
     {
       "code": "006479",
@@ -1396,6 +1381,23 @@
       "indexName": "标准普尔500指数",
       "yield1y": 1.95,
       "scale": 1525966041.52
+    },
+    {
+      "code": "003722",
+      "name": "易方达纳斯达克100ETF联接(QDII-LOF)A(美元现汇)",
+      "company": "易方达基金",
+      "index": "NDX",
+      "currency": "USD_WIRE",
+      "shareClass": "A",
+      "state": "suspended",
+      "stateText": "暂停申购",
+      "stateNote": null,
+      "limit": 0,
+      "redeemStatus": "暂停赎回",
+      "indexCode": "NDX100",
+      "indexName": "纳斯达克100指数",
+      "yield1y": 5.79,
+      "scale": 1741351164.38
     }
   ]
 }
